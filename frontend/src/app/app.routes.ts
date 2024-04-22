@@ -4,13 +4,13 @@ export const routes: Routes = [
   {
     path: "login",
     loadComponent:
-        () => import("./components/login/login.component")
+        () => import("./components/auth/components/login/login.component")
         .then(c => c.LoginComponent)
   },
   {
     path: "register",
     loadComponent:
-        () => import("./components/register/register.component")
+        () => import("./components/auth/components/register/register.component")
         .then(c => c.RegisterComponent)
   },
   {
@@ -24,6 +24,12 @@ export const routes: Routes = [
         loadComponent:
             () => import("./components/home/home.component")
             .then(c => c.HomeComponent)
+      },
+      {
+        path: "categories",
+        loadComponent:
+            () => import("./components/categories/categories.component")
+            .then(c => c.CategoriesComponent)
       }
     ]
   }

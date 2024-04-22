@@ -8,7 +8,10 @@ app.use(express.json());
 app.use(cors());
 
 const authRouter = require('./routers/auth.router'); 
+const categoryRouter = require('./routers/category.router');
+
 app.use("/api/auth", authRouter); // api/auth/register ve api/auth/login isteklerini yönlendirir.
+app.use("/api/categories", categoryRouter); // api/categories/add, api/categories/removeById, api/categories/update ve api/categories/getAll isteklerini yönlendirir.
 
 connection();
 

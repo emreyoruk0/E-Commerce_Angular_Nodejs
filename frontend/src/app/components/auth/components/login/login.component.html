@@ -5,6 +5,7 @@
         <h1 class="text-center">Giriş Sayfası</h1>
       </div>
       <div class="card-body">
+        <!-- back-end'de kullanıcı girişi için mail ve şifre şartı olduğu için form ile onları almamız gerek -->
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" autocomplete="off">
           <div class="form-group">
             <label for="email">E-mail</label>
