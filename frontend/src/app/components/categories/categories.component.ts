@@ -5,17 +5,20 @@ import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from './services/category.service';
 import { NgForm } from '@angular/forms';
 import { SwalService } from '../../common/services/swal.service';
+import { CategoryPipe } from './pipes/category.pipe';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, CategoryPipe],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent implements OnInit{
   categories: CategoryModel[] = []; // tüm kategorileri tutar
   updateCategory: CategoryModel = new CategoryModel(); // güncellenecek kategoriyi tutar
+
+  search: string = ""; // arama çubuğu için.
 
   constructor(
     private _toastr: ToastrService,

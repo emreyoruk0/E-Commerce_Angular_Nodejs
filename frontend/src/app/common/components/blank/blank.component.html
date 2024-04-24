@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="float-start">{{ title }}</h4>
+    <nav aria-label="breadcrumb" class="float-end">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Ana Sayfa</a></li>
+        <li class="breadcrumb-item active" *ngIf="title != 'Ana Sayfa'" aria-current="page">{{ title }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- title ve sectionTitle alanları dış componenttan gönderilen değerlerle doldurulacak -->
+<div class="card mt-2">
+  <div class="card-header">
+    <h4>{{ sectionTitle }} </h4>
+  </div>
+  <div class="card-body">
+    <ng-content></ng-content> <!-- Bu kısma ilgili component'in içeriği gelecek.
+      <app-blank title="Ana Sayfa" sectionTitle="Ürünler">
+        **Bu alandaki şeyler ng-content kısmına gelecek**
+      </app-blank>
+    -->
+  </div>
+</div>
+
+
