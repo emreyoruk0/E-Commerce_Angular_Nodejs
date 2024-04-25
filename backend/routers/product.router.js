@@ -3,8 +3,8 @@ const router = express.Router();
 const Product = require('../models/product');
 const {v4: uuidv4} = require('uuid');
 const fs = require('fs'); // Dosya işlemleri için kullanılır.
-const upload = require('../services/file.service'); 
-const response = require('../services/response.service');
+const upload = require('../services/file.service');
+const response = require('../services/response.service'); //response fonksiyonunu import eder
 
 
 //Ürün Ekleme --> /api/products/add
@@ -130,6 +130,6 @@ router.post("/update", upload.array("images"), async (req, res) => {
         } 
 
         await Product.findByIdAndUpdate(_id, product); // _id'si verilen ürünü yukarıda oluşturduğumuz product nesnesiyle günceller
-        res.json({message: 'Ürün başarıyla güncellendi.'}); //geriye mesaj döndürür
+        res.json({message: 'Ürün başarıyla güncellendi.'}); // geriye mesaj döndürür
     });
 });
