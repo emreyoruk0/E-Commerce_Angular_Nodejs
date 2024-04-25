@@ -1,0 +1,18 @@
+<app-blank title="Ürünler" sectionTitle="Ürünler Listesi">
+
+  <app-table [heads]='[
+  "#",
+  "Ürün Resmi",
+  "Ürün Adı",
+  "Kategoriler",
+  "Stok Bilgisi",
+  "Birim Fiyatı",
+  "Oluşturulma Tarihi",
+  "Aktif/Pasif",
+  "İşlemler"]'>
+  <tr *ngFor="let product of result.datas let i = index">
+    <td> {{ i + 1 }} </td>
+  </tr>
+  </app-table>
+
+</app-blank>

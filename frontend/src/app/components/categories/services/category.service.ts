@@ -9,13 +9,18 @@ import { MessageResponseModel } from '../../../common/models/message.response.mo
 })
 export class CategoryService {
 
+
+  // http://localhost:5000/api/...
+  // api/categories/, api/categories/add, api/categories/update ve api/categories/removeById
+  // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
+
   constructor(
     private _http: GenericHttpService
   ) { }
 
   // tüm kategorileri getirir
   getAll(callback: (res: CategoryModel[]) => void){
-    this._http.get<CategoryModel[]>('categories', res=>callback(res)); // CategoryModel[] tipinde bir dizi döner
+    this._http.get<CategoryModel[]>('categories/', res=>callback(res)); // CategoryModel[] tipinde bir dizi döner
   }
 
 

@@ -94,6 +94,20 @@ router.post("/", async (req, res) => {
 });
 
 
+
+// Ürünün Aktiflik Durumunu Değiştirme --> /api/products/changeIsActive
+router.post('/changeActiveStatus', async (req, res) => {
+    response(res, async () => {
+        const {_id} = req.body; //body'den aktiflik durumu değiştirilecek ürünün _id'sini alır
+        let product = await Product.findById(_id); //id'si verilen ürünü bulur
+        product.isActive = !product.isActive; //ürünün aktiflik durumunu tersine çevirir
+
+        await Product.findByIdAndUpdate(_id, product); // _id'si verilen ürünü yukarıda oluşturduğumuz product nesnesiyle günceller
+        res.json({message: 'Ürünün aktiflik durumu başarıyla değiştirildi.'});
+    });
+});
+
+
 // Ürünü Id'ye Göre Getirme --> /api/products/getById
 router.post("/getById", async (req, res) =>{
     response(res, async () => {
@@ -133,3 +147,26 @@ router.post("/update", upload.array("images"), async (req, res) => {
         res.json({message: 'Ürün başarıyla güncellendi.'}); // geriye mesaj döndürür
     });
 });
+
+
+
+// Ürün resmi silme --> /api/products/removeImageByProductIdAndIndex
+router.post('/removeImageByProductIdAndIndex', async (req, res) => {
+    response(res, async () => {
+        const {_id, index} = req.body; //body'den resmi silinecek ürünün _id'sini ve index'ini(seçilen resmi) alır
+
+        let product = await Product.findById(_id); //id'si verilen ürünü bulur
+
+        if(product.imageUrls.length == 1){
+            res.status(500).json({message: 'Son ürün resmini silemezsiniz! Ürün en az bir resme sahip olmalıdır.'});
+        } else {
+            let image = product.imageUrls[index]; //index'ine göre seçili resmi resmi bulur
+            product.imageUrls.splice(index, 1); //seçili resmi resimlerden isim olarak siler
+            await Product.findByIdAndUpdate(_id, product); // _id'si verilen ürünü resim silindikten sonra günceller(product nesnesiyle)
+            fs.unlink(image.path, () => {}); //seçili resmi fiziki olarak siler
+            res.json({message: 'Resim başarıyla silindi.'}); //geriye mesaj döndürür
+        }
+    });
+});
+
+module.exports = router;
