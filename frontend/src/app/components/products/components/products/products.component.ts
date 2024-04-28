@@ -15,9 +15,7 @@ import { SharedModule } from '../../../../common/shared/shared.module';
   styleUrl: './products.component.css',
 })
 export class ProductsComponent implements OnInit {
-  result: PaginationResultModel<ProductModel[]> = new PaginationResultModel<
-    ProductModel[]
-  >(); // veriler pagination yapısına uygun olarak result değişkeninde atanacak
+  result: PaginationResultModel<ProductModel[]> = new PaginationResultModel<ProductModel[]>(); // veriler pagination yapısına uygun olarak result değişkeninde atanacak
   request: RequestModel = new RequestModel(); // pagination için gerekli request modeli
   pageNumbers: number[] = []; // sayfa numaralarını tutacak değişken
   products: ProductModel = new ProductModel();
@@ -33,6 +31,7 @@ export class ProductsComponent implements OnInit {
     this.getAll();
   }
 
+  // pageNumber = 1 olduğunda tüm sayfaları/ürünleri getirir. Eğer 1 dışında parametre gönderilirse yani sayfa numarası belirtilirse o sayfayı getirir
   getAll(pageNumber = 1) {
     this.request.pageNumber = pageNumber;
     this._productService.getAll(this.request, (res) => {
@@ -41,6 +40,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  // Sayfa numaralarını belirler
   setPageNumbers() {
     const startPage = Math.max(1, this.result.pageNumber - 2);
     const endPage = Math.min(
@@ -53,9 +53,29 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+
   search() {
     if (this.request.search.length >= 3) {
       this.getAll(1);
     }
+  }
+
+  // id'si gönderilen ürünü siler
+  removeById(id: string) {
+    this._swal.callSwal("Ürünü silmek istediğinizden emin misiniz?", "Ürünü Sil","Sil", () =>{
+      let model = { _id: id };
+      this._productService.removeById(model, (res) => {
+        this._toastr.info(res.message);
+        this.getAll(this.request.pageNumber); // ürün silindikten sonra mevcut sayfadaki güncel ürünleri getirmek için
+      });
+    });
+  }
+
+  // id'si gönderilen ürünün aktiflik durumunu değiştirir
+  changeProductStatus(id: string) {
+    let model = { _id: id };
+    this._productService.changeActiveStatus(model, (res) => {
+      this._toastr.info(res.message);
+    });
   }
 }

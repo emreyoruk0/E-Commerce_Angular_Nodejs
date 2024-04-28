@@ -52,8 +52,8 @@ export class ProductService {
   } // post ile ProductModel tipinde ürünü dönderir
 
 
-  // Üründen resim silme
-  removeImageByProductIdAndIndex(model: any, callback: (res: ProductModel) => void){
-    this._http.post<ProductModel>('products/removeImageByProductIdAndIndex', model, res => callback(res));
+  // Üründen resim silme(ürün id'si ve resim index'i ile silme işlemi yapılır)
+  removeImageByProductIdAndIndex(model: any, callback: (res: MessageResponseModel) => void){
+    this._http.post<MessageResponseModel>('products/removeImageByProductIdAndIndex', model, res => callback(res));
   }
 }
