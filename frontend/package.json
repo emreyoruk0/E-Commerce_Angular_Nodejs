@@ -26,6 +26,7 @@
     "ngx-spinner": "^16.0.2",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
+    "tr-currency": "^1.0.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

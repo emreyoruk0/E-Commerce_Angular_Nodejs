@@ -125,9 +125,9 @@ router.post("/update", upload.array("images"), async (req, res) => {
         let product = await Product.findById(_id); //id'si verilen güncellenecek ürünü bulur
 
         //ürüne ait resimleri siler
-        for(const image of product.imageUrls){
-            fs.unlink(image.path, () => {}); 
-        }
+        // for(const image of product.imageUrls){
+        //     fs.unlink(image.path, () => {}); 
+        // }
 
         // yeni resimler upload.array("images") parametresi ile alınır ve eski resimlerle birleştirilir
         // req.files -> upload.array("images") ile alınan resimleri döndürür
@@ -139,9 +139,9 @@ router.post("/update", upload.array("images"), async (req, res) => {
             name: name.toUpperCase(),
             stock: stock,
             price: price,
-            categories: categories,
-            imageUrls: imageUrls
-        } 
+            imageUrls: imageUrls,
+            categories: categories
+        };
 
         await Product.findByIdAndUpdate(_id, product); // _id'si verilen ürünü yukarıda oluşturduğumuz product nesnesiyle günceller
         res.json({message: 'Ürün başarıyla güncellendi.'}); // geriye mesaj döndürür
@@ -166,6 +166,46 @@ router.post('/removeImageByProductIdAndIndex', async (req, res) => {
             fs.unlink(image.path, () => {}); //seçili resmi fiziki olarak siler
             res.json({message: 'Resim başarıyla silindi.'}); //geriye mesaj döndürür
         }
+    });
+});
+
+
+// Ana sayfa için ürün listesini getirme --> /api/products/getAllForHomePage
+router.post("/getAllForHomePage", async (req, res) => {
+    response(res, async () => {
+        const {pageNumber, pageSize, search, categoryId, priceFilter} = req.body;
+        let products;
+
+        // Filtreleme yoksa
+        if(priceFilter == "0"){
+            products = await Product
+               .find({
+                    isActive: true, //sadece aktif ürünleri getirir
+                    categories: { $regex: categoryId, $options: 'i' }, //categoryId'ye göre ürünleri getirir
+                    $or: [
+                        {
+                            name: { $regex: search, $options: 'i' }
+                        }
+                    ] //arama kelimesine göre ürünleri getirir
+               })
+               .sort({name: 1}) //ürünleri isimlerine göre sıralar
+               .populate('categories'); //kategorileri getirir
+        } else{
+            products = await Product
+               .find({
+                    isActive: true,
+                    categories: { $regex: categoryId, $options: 'i' },
+                    $or: [
+                        {
+                            name: { $regex: search, $options: 'i' }
+                        }
+                    ]
+               })
+               .sort({price: priceFilter}) //fiyat filtrelemesine göre ürünleri sıralar(artan-azalan)
+               .populate('categories');
+        }
+
+        res.json(products); 
     });
 });
 

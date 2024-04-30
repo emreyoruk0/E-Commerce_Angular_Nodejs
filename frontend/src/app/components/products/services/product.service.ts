@@ -11,7 +11,7 @@ import { ProductModel } from '../models/product.model';
 export class ProductService {
 
   // http://localhost:5000/api/...
-  // api/products/, api/products/add, api/products/removeById, api/products/changeIsActive, api/products/getById,  api/products/update ve api/products/removeImageByProductIdAndIndex
+  // api/products/, api/products/add, api/products/removeById, api/products/changeIsActive, api/products/getById,  api/products/update, api/products/removeImageByProductIdAndIndex ve api/products/getAllForHomePage
   // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
 
   constructor(
@@ -55,5 +55,10 @@ export class ProductService {
   // Üründen resim silme(ürün id'si ve resim index'i ile silme işlemi yapılır)
   removeImageByProductIdAndIndex(model: any, callback: (res: MessageResponseModel) => void){
     this._http.post<MessageResponseModel>('products/removeImageByProductIdAndIndex', model, res => callback(res));
+  }
+
+  // Anasayfa için ürünleri getirme
+  getAllforHomePage(model: RequestModel, callback: (res: ProductModel[]) => void){
+    this._http.post<ProductModel[]>('products/getAllForHomePage', model, res => callback(res));
   }
 }

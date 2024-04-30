@@ -1,5 +1,60 @@
 <app-blank title="Ana Sayfa" sectionTitle="Ürünler">
-  <div>
-    ANA SAYFAAAAA
+  <div class="row">
+    <div class="col-md-3 p-2 ps-1">
+      <ul class="list-group">
+        <li
+          class="list-group-item border border-2 cursor-pointer"
+          [ngClass]="request.categoryName == 'Tümü' ? 'active' : ''"
+          (click)="changeCategory('', 'Tümü')">Tümü
+        </li>
+        <li
+          *ngFor="let category of categories"
+          class="list-group-item border border-2"
+          [ngClass]="request.categoryName == category.name ? 'active' : ''" (click)="changeCategory(category._id, category.name)">
+          {{category.name}}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-9">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-7">
+            <label>Arama</label>
+            <input [(ngModel)]="request.search" type="search" class="form-control" placeholder="Kategori arayın...">
+          </div>
+          <div class="col-md-3">
+            <label>Fiyat Sıralaması</label>
+            <select [(ngModel)]="request.priceFilter" class="form-control">
+              <option value="0">Seçim yapınız...</option>
+              <option value="1">Artan Fiyat</option>
+              <option value="-1">Azalan Fiyat</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label>İşlemler</label><br>
+            <button (click)="getAll()" class="btn btn-primary">Uygula</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-4" *ngFor="let product of products let i = index">
+          <div class="card text-center">
+            <div class="card-header">
+              <h2>{{product.name}}</h2>
+            </div>
+            <div class="card-body">
+              <img [src]="'http://localhost:5000/' + product.imageUrls[0].path" width="200" height="160">
+              <p><b>Kalan Adet: {{product.stock}}</b></p>
+              <hr>
+              <h4 class="alert alert-danger">Adet Fiyatı: {{product.price | trCurrency: '₺'}}</h4>
+              <button *ngIf="product.stock > 0" class="btn btn-outline-success w-100">
+                Sepete Ekle
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </app-blank>

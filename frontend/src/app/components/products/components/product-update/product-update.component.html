@@ -1,8 +1,8 @@
-<app-blank title="Ürün Ekleme" sectionTitle="Ürün Ekleme">
+<app-blank title="Ürün Güncelleme" sectionTitle="Ürün Güncelleme">
 
   <div class="row center">
     <div class="col-md-6">
-      <form #addForm="ngForm" (ngSubmit)="add(addForm)" autocomplete="off">
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
         <div class="form-group">
           <label for="name">Ürün Adı</label>
           <input
@@ -91,7 +91,7 @@
         </div>
 
         <div class="mt-2 form-group">
-          <button class="btn btn-primary w-100">Kaydet</button>
+          <button class="btn btn-warning w-100">Güncelle</button>
         </div>
       </form>
     </div>

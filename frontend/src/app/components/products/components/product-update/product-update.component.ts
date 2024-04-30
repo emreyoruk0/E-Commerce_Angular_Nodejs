@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { SharedModule } from '../../../../common/shared/shared.module';
 import { CategoryModel } from '../../../categories/models/category.model';
 import { NgForm } from '@angular/forms';
-import { Router } from 'express';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../../categories/services/category.service';
 import { ProductService } from '../../services/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductModel } from '../../models/product.model';
 
 @Component({
@@ -75,43 +74,44 @@ export class ProductUpdateComponent {
     );
   }
 
-  add(form: NgForm) {
+  update(form: NgForm) {
     if(form.value["categoriesSelect"].length == 0){
       this._toastr.error("Kategori seçimi yapmadınız!..");
       return;
     }
     if(form.valid){
-      let product = form.value; // Formun tüm verileri product değişkenine atanır. name, categoriesSelect, price, stock alanlarının tümü alınır
-      let name = product["name"];
+      let product = form.value;
       let categories: string[] = product["categoriesSelect"];
       let price = product["price"];
-      let stock = product["stock"];
       price = price.toString().replace(",", ".");
 
-      let formData = new FormData(); // Form verilerini göndermek için FormData nesnesi oluşturulur
-      // **Resim veya dosya ekleyeceksek mutlaka FormData ile almamız gerek**
-
-      // Form verileri FormData nesnesinin ilgili alanlarına eklenir
-      formData.append("name", name);
-      formData.append("stock", stock);
+      let formData = new FormData();
+      formData.append("_id", this.product._id);
+      formData.append("name", this.product.name);
       formData.append("price", price);
+      formData.append("stock", product["stock"]);
       for(const category of categories){
         formData.append("categories", category);
       }
-      for(const image of this.images){
-        formData.append("images", image, image.name);
+
+      if(this.images != undefined){
+        for(const image of this.images){
+          formData.append("images", image, image.name);
+        }
       }
 
-      this._productService.add(formData, res => {
-        this._toastr.success(res.message);
-        form.reset();
-        this.imageUrls = [];
+      this._productService.update(formData, res =>{
+        this._toastr.info(res.message);
+        this._router.navigateByUrl("/products"); // Ürün güncellendikten sonra ürünler sayfasına geri döndürür
       });
     }
   }
 
   deleteImage(_id: string, index: number){
-    let model = {_id: _id, index: index};
+    let model = {
+        _id: _id,
+        index: index
+      };
     this._productService.removeImageByProductIdAndIndex(model, res => {
       this._toastr.warning(res.message);
       this.getById(); // Resim silindikten sonra ürünü tekrar getirir
