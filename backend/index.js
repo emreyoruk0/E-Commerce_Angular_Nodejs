@@ -12,10 +12,18 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads"))); //uploads 
 const authRouter = require('./routers/auth.router'); 
 const categoryRouter = require('./routers/category.router');
 const productRouter = require('./routers/product.router');
+const basketRouter = require('./routers/basket.router');
+
+
+
 
 app.use("/api/auth", authRouter); // api/auth/register ve api/auth/login isteklerini yönlendirir.
+
 app.use("/api/categories", categoryRouter); // api/categories/, api/categories/add, api/categories/removeById ve api/categories/update isteklerini yönlendirir.
+
 app.use("/api/products", productRouter); // api/products/, api/products/add, api/products/removeById, api/products/changeIsActive, api/products/getById,  api/products/update ve api/products/removeImageByProductIdAndIndex isteklerini yönlendirir.
+
+app.use("/api/baskets", basketRouter); // api/basket/add, api/basket/removeById ve api/basket/ isteklerini yönlendirir.
 
 connection();
 

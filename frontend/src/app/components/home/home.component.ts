@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit{
 
   // tüm ürünleri burdaki products dizisine atar
   getAll(){
-    this._productService.getAllforHomePage(this.request, res =>this.products = res);
+    this._productService.getAllForHomePage(this.request, res =>this.products = res);
   }
 
   // tüm kategorileri burdaki categories dizisine atar

@@ -201,7 +201,7 @@ router.post("/getAllForHomePage", async (req, res) => {
                         }
                     ]
                })
-               .sort({price: priceFilter}) //fiyat filtrelemesine göre ürünleri sıralar(artan-azalan)
+               .sort({price: priceFilter}) //fiyat filtrelemesine göre ürünleri sıralar(artan-azalan)(1/-1)
                .populate('categories');
         }
 

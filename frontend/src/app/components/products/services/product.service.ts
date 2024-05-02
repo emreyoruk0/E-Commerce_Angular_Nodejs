@@ -58,7 +58,7 @@ export class ProductService {
   }
 
   // Anasayfa için ürünleri getirme
-  getAllforHomePage(model: RequestModel, callback: (res: ProductModel[]) => void){
-    this._http.post<ProductModel[]>('products/getAllForHomePage', model, res => callback(res));
+  getAllForHomePage(model: RequestModel, callBack: (res: ProductModel[])=> void){
+    this._http.post<ProductModel[]>("products/getAllForHomePage", model, res=> callBack(res));
   }
 }
