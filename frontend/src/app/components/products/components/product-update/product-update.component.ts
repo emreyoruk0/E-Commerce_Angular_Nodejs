@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../common/shared/shared.module';
 import { CategoryModel } from '../../../categories/models/category.model';
 import { NgForm } from '@angular/forms';
@@ -15,7 +15,7 @@ import { ProductModel } from '../../models/product.model';
   templateUrl: './product-update.component.html',
   styleUrl: './product-update.component.css'
 })
-export class ProductUpdateComponent {
+export class ProductUpdateComponent implements OnInit {
   categories: CategoryModel[] = []; //
   images: File[] = [];
   imageUrls: any[] = [];
@@ -67,7 +67,7 @@ export class ProductUpdateComponent {
     }
   }
 
-  //
+
   addImage(imageUrl: string, file: any){
     this.imageUrls.push(
       {imageUrl: imageUrl, name: file.name, size: file.size}

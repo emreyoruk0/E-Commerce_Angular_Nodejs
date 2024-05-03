@@ -33,7 +33,7 @@
             <img
               [src]="'http://localhost:5000/' + product.imageUrls[0].path"
               width="50"
-            />
+            /> <!-- product.imageUrls[0].path' de 0 denmesinin sebebi ürünün birden fazla fotoğrafı varsa ilki görünsün diye-->
           </td>
           <td>{{ product.name }}</td>
           <td>

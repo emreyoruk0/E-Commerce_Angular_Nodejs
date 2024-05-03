@@ -164,6 +164,7 @@ router.post('/removeImageByProductIdAndIndex', async (req, res) => {
             product.imageUrls.splice(index, 1); //seçili resmi resimlerden isim olarak siler
             await Product.findByIdAndUpdate(_id, product); // _id'si verilen ürünü resim silindikten sonra günceller(product nesnesiyle)
             fs.unlink(image.path, () => {}); //seçili resmi fiziki olarak siler
+            
             res.json({message: 'Resim başarıyla silindi.'}); //geriye mesaj döndürür
         }
     });

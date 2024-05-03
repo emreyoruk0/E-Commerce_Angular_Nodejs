@@ -50,7 +50,7 @@
               <p><b>Kalan Adet: {{product.stock}}</b></p>
               <hr>
               <h4 class="alert alert-danger">Adet Fiyatı: {{product.price | trCurrency: '₺'}}</h4>
-              <button *ngIf="product.stock > 0" class="btn btn-outline-success w-100">
+              <button (click)="addBasket(product._id, product.price)" *ngIf="product.stock > 0" class="btn btn-outline-success w-100">
                 Sepete Ekle
               </button>
             </div>

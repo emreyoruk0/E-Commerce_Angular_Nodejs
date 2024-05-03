@@ -13,6 +13,7 @@ const authRouter = require('./routers/auth.router');
 const categoryRouter = require('./routers/category.router');
 const productRouter = require('./routers/product.router');
 const basketRouter = require('./routers/basket.router');
+const orderRouter = require('./routers/order.router');
 
 
 
@@ -24,6 +25,8 @@ app.use("/api/categories", categoryRouter); // api/categories/, api/categories/a
 app.use("/api/products", productRouter); // api/products/, api/products/add, api/products/removeById, api/products/changeIsActive, api/products/getById,  api/products/update ve api/products/removeImageByProductIdAndIndex isteklerini yönlendirir.
 
 app.use("/api/baskets", basketRouter); // api/basket/add, api/basket/removeById ve api/basket/ isteklerini yönlendirir.
+
+app.use("/api/orders", orderRouter); // api/orders/create ve api/orders/ isteklerini yönlendirir.
 
 connection();
 

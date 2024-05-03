@@ -5,6 +5,9 @@ import { CategoryService } from '../categories/services/category.service';
 import { RequestModel } from '../../common/models/request.model';
 import { ProductService } from '../products/services/product.service';
 import { ProductModel } from '../products/models/product.model';
+import { BasketModel } from '../baskets/models/basket.model';
+import { BasketService } from '../baskets/services/basket.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +23,9 @@ export class HomeComponent implements OnInit{
 
   constructor(
     private _categoryService: CategoryService,
-    private _productService: ProductService
+    private _productService: ProductService,
+    private _basketService: BasketService,
+    private _toastr: ToastrService
   ){}
 
   ngOnInit(){
@@ -43,5 +48,18 @@ export class HomeComponent implements OnInit{
     this.request.categoryName = categoryName;
     this.request.categoryId = categoryId;
     this.getAll(); // kategoriyi değiştirdikten sonra sadce o kategoriye ait ürünleri getirir
+  }
+
+
+  // sepete ekleme metodu
+  addBasket(productId: string, price: number){
+    let model = new BasketModel();
+    model.productId = productId;
+    model.price = price;
+    model.quantity = 1;
+    this._basketService.add(model, res => {
+      this._toastr.success(res.message);
+      this.getAll();
+    });
   }
 }

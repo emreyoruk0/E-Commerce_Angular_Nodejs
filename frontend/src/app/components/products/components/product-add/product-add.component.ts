@@ -53,7 +53,7 @@ export class ProductAddComponent implements OnInit {
     }
   }
 
-  //
+
   addImage(imageUrl: string, file: any){
     this.imageUrls.push(
       {imageUrl: imageUrl, name: file.name, size: file.size}
@@ -91,6 +91,7 @@ export class ProductAddComponent implements OnInit {
         this._toastr.success(res.message);
         form.reset();
         this.imageUrls = [];
+        this._router.navigateByUrl("/products"); // Ürün eklendikten sonra ürünler sayfasına geri döndürür
       });
     }
   }

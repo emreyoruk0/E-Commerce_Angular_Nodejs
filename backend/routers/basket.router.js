@@ -25,7 +25,12 @@ router.post('/add', async (req, res) => {
         product.stock -= quantity; //ürünün stok miktarını güncelliyoruz
         await Product.findByIdAndUpdate(productId, product); //ürünün stoğunu güncelledikten sonra kaydediyoruz.
 
-        res.json({message: 'Ürün sepete başarıyla eklendi.'})
+        res.json({message: 'Ürün sepete başarıyla eklendi.'});
+        // burda ne döndürüyorsa front-end kısmında basket.service.ts dosyasındaki add metodunda da o tipte dönmesi gerekiyor.
+        // Mesela sadece message dönderdiği için orada da MessageResponseModel tipinde dönüş yapılmalı.
+        // add(,callback: (res: MessageResponseModel) => void)
+        //  this._http.post<MessageResponseModel>...
+        // kısımları bu şekilde olmalı
     });
 });
 
@@ -38,11 +43,13 @@ router.post('/removeById', async (req, res) => {
         let basket = await Basket.findById(_id); //id'ye göre sepetteki mevcut ürünü bulur
 
         // Kullanıcı ürünü sepetten sildikten sonra o ürünün mevcut stoğunu arttırmalıyız
-        let product = await Product.findById(productId); 
+        let product = await Product.findById(basket.productId); //ürünü bulur
         product.stock += basket.quantity; //ürünün stok miktarını arttırıyoruz.
-        await Product.findByIdAndUpdate(productId, product); 
+        await Product.findByIdAndUpdate(basket.productId, product); 
 
         await Basket.findByIdAndDelete(_id); //id'ye göre ürünü siliyoruz
+
+        res.json({message: "Ürünü sepetten başarıyla kaldırıldı!"});
     });
 }); 
 
@@ -67,6 +74,20 @@ router.post('/', async (req, res) => {
         ]);
 
         res.json(baskets); //bulunan sepeti döndürüyoruz
+        // Bunda da mesela front-end kısmında basket.service.ts dosyasındaki getAll metodunda dönüş tipi olarak BasketModel[] tipinde dönmesi gerekiyor. Çünkü burda o tipte dönüş yapılıyor.
+        // getAll(callback: (res: BasketModel[]) => void)
+        //  this._http.post<BasketModel[]>...
+    });
+});
+
+// Sepetteki ürün sayısını getirir -> /api/basket/getCount
+router.post('/getCount', async(req, res) => {
+    response(res, async () => {
+        const {userId} = req.body; //body'den gelen userId'yi alıyoruz. Hangi kullanıcının sepetinde kaç ürün olduğunu bilmek için
+        const count = await Basket.find({userId: userId}).count(); //userId'ye göre sepeti eşleştirip sayısını döndürüyoruz
+
+
+        res.json({count: count}); // direk count diye vermiyoruz. Bunun sebebi: string, integer veya boolean tarzı json formatlarını bir objeye yerleştirmeden Angular tarafına yollarsak Angular bunu hata olarak algılar. O yüzden mutlaka bir obje içerisine yerleştirip o şekilde karşı tarafa göndermemiz gerekiyor.
     });
 });
 
