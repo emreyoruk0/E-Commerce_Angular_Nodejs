@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const Product = require('../models/product');
 
 
-// Sepete ürün ekleme -> /api/basket/add
+// Sepete ürün ekleme -> /api/baskets/add
 router.post('/add', async (req, res) => {
     response(res, async () => {
         const {userId, productId, price, quantity} = req.body; //body'den gelen verileri alıp değişkenlere atıyoruz
@@ -35,7 +35,7 @@ router.post('/add', async (req, res) => {
 });
 
 
-// Sepetten ürün silme -> /api/basket/removeById
+// Sepetten ürün silme -> /api/baskets/removeById
 router.post('/removeById', async (req, res) => {
     response(res, async () => {
         const {_id} = req.body; // body'den gelen id'yi alıyor
@@ -54,7 +54,7 @@ router.post('/removeById', async (req, res) => {
 }); 
 
 
-// Sepetteki tüm ürünleri listeleme -> /api/basket/
+// Sepetteki tüm ürünleri listeleme -> /api/baskets/
 router.post('/', async (req, res) => {
     response(res, async () => {
         const {userId} = req.body; //body'den gelen userId'yi alıyoruz. Hangi kullanıcının sepet listesini aldığını bilmek için. Yani o kullanıcının sepetindeki ürünleri getirmeceğiz
@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
     });
 });
 
-// Sepetteki ürün sayısını getirir -> /api/basket/getCount
+// Sepetteki ürün sayısını getirir -> /api/baskets/getCount
 router.post('/getCount', async(req, res) => {
     response(res, async () => {
         const {userId} = req.body; //body'den gelen userId'yi alıyoruz. Hangi kullanıcının sepetinde kaç ürün olduğunu bilmek için

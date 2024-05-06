@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 const response = require('../services/response.service');
 
 
-// Tüm kategorileri getirme -->  /api/categories
+// Tüm kategorileri getirme -->  /api/categories/
 router.get("/", async (req, res) =>{
     response(res, async () => {
         const categories = await Category.find().sort({name: 1}); //tüm kategorileri bulur ve A'dan Z'ye sıralar

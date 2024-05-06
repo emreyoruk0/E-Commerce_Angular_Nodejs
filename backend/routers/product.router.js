@@ -95,7 +95,7 @@ router.post("/", async (req, res) => {
 
 
 
-// Ürünün Aktiflik Durumunu Değiştirme --> /api/products/changeIsActive
+// Ürünün Aktiflik Durumunu Değiştirme --> /api/products/changeActiveStatus
 router.post('/changeActiveStatus', async (req, res) => {
     response(res, async () => {
         const {_id} = req.body; //body'den aktiflik durumu değiştirilecek ürünün _id'sini alır

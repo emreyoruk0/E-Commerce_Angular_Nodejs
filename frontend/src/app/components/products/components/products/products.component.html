@@ -68,8 +68,8 @@
 
   <!-- Pagination -->
   <select name="pageSize" id="pageSize" class="form-control text-center float-start" [(ngModel)]="request.pageSize" style="width: 65px;">
-    <option>5</option>
-    <option>10</option>
+    <option [value]="5">5</option>
+    <option value="10">10</option>
     <option>20</option>
     <option>50</option>
     <option>100</option>
@@ -89,7 +89,7 @@
             <a class="page-link" [ngClass]="result.pageNumber == p ? 'active' : ''" (click)="getAll(p)"> {{ p }} </a>
         </li>
         <li class="page-item" [ngClass]="result.isLastPage ? 'disabled' : ''">
-          <a class="page-link" (click)="getAll(request.pageNumber - 1)">Sonraki</a>
+          <a class="page-link" (click)="getAll(request.pageNumber + 1)">Sonraki</a>
         </li>
         <li class="page-item" [ngClass]="result.isLastPage ? 'disabled' : ''">
           <a class="page-link" (click)="getAll(result.totalPageCount)">Son</a>

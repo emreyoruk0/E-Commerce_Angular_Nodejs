@@ -11,7 +11,7 @@ import { ProductModel } from '../models/product.model';
 export class ProductService {
 
   // http://localhost:5000/api/...
-  // api/products/, api/products/add, api/products/removeById, api/products/changeIsActive, api/products/getById,  api/products/update, api/products/removeImageByProductIdAndIndex ve api/products/getAllForHomePage
+  // api/products/, api/products/add, api/products/removeById, api/products/changeActiveStatus, api/products/getById, api/products/update, api/products/removeImageByProductIdAndIndex ve api/products/getAllForHomePage
   // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
 
   constructor(

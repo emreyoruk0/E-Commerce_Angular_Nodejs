@@ -9,6 +9,10 @@ import { OrderModel } from '../models/order.model';
 })
 export class OrderService {
 
+  // http://localhost:5000/api/...
+  // api/orders/ ve api/orders/create
+  // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
+
   constructor(
     private _http: GenericHttpService,
     private _basketService: BasketService

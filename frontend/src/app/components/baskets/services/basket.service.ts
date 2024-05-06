@@ -7,6 +7,11 @@ import { MessageResponseModel } from '../../../common/models/message.response.mo
   providedIn: 'root'
 })
 export class BasketService {
+
+  // http://localhost:5000/api/...
+  // api/baskets/, api/baskets/add, api/baskets/removeById ve api/baskets/getCount
+  // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
+
   count: number = 0;
 
   constructor(

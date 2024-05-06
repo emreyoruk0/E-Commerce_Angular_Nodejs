@@ -1,4 +1,6 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { AuthService } from './components/auth/services/auth.service';
 
 export const routes: Routes = [
   {
@@ -18,6 +20,7 @@ export const routes: Routes = [
     loadComponent:
         () => import("./components/layouts/layouts.component")
         .then(c => c.LayoutsComponent),
+    canActivateChild: [() => inject(AuthService).checkIsAuth()], // bu gerekli, kullanıcı giriş yapmadan bu sayfaları görememesi için
     children: [
       {
         path: "",

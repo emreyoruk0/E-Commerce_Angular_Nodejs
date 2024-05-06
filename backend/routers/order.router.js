@@ -6,6 +6,7 @@ const Basket = require('../models/basket');
 const response = require('../services/response.service');
 
 
+// Sipariş oluşturma -> api/orders/create
 router.post('/create', async(req, res) => {
     response(res, async () => {
         const {userId} = req.body; // body'den userId'yi alır
@@ -33,6 +34,7 @@ router.post('/create', async(req, res) => {
 });
 
 
+// Tüm siparişleri getirme -> api/orders/
 router.post('/', async(req, res) => {
     response(res, async () => {
         const {userId} = req.body;

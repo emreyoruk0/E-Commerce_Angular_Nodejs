@@ -17,7 +17,8 @@ export class SwalService {
       showCancelButton: true,
       cancelButtonText: 'Vazgeç',
       icon: 'question'
-    }).then(res => {
+    })
+    .then(res => {
       if(res.isConfirmed){ // kullanıcı confirm(onayla) butonuna tıklarsa
         callback();
       }
