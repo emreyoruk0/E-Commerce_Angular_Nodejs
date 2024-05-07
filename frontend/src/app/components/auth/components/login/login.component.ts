@@ -28,8 +28,9 @@ export class LoginComponent {
       model.email = form.controls["email"].value;
       model.password = form.controls["password"].value;
 
-      this._auth.login(model, res =>{
-        this._toastr.success("Giriş başarılı!");
+      // AuthService'deki login metodu LoginModel ve callback fonksiyonu bekliyor.
+      this._auth.login(model, res => { // (res: LoginResponseModel) tipinde olur çünkü öyle tanımlandı.
+        this._toastr.success(`Hoş Geldiniz ${res.user.name}`, "Giriş Başarılı!");
 
         // token ve kullanıcı bilgilerini localStorage'a kaydeder.
         localStorage.setItem("token", res.token);

@@ -15,6 +15,10 @@ export class GenericHttpService {
     private _spinner: NgxSpinnerService
   ){ }
 
+  // T -> Genel tür (Generic type) parametresidir.
+  // Genel türler, farklı veri türleriyle çalışabilen ve yeniden kullanılabilir kod yazmamızı sağlar. Bu sayede aynı get/post işlevini farklı veri türleri için aynı kodu çoğaltmadan kullanabiliriz.
+  // Özetle, T, farklı veri türleriyle çalışabilen esnek bir işlev oluşturmamıza olanak tanır ve çağırırken sağladığımız özel türe adapte olur.
+
   get<T>(api: string, callback: (res: T) => void){
     this._spinner.show();
     this._http.get<T>(`${this.apiUrl}/${api}`).subscribe({

@@ -21,6 +21,11 @@
               [appValid]="email.validity.valid">
               <div class="invalid-feedback">Geçerli bir mail adresi giriniz</div>
           </div>
+
+<!-- [appValid] kullanmak yerine direk şu şekilde de yapabiliriz;
+                [ngClass]="email.validity.valid ? 'is-valid' : 'is-invalid'"
+                [ngClass]="password.validity.valid ? 'is-valid' : 'is-invalid'" -->
+
           <div class="form-group mt-2">
             <label for="password">Şifre</label>
             <input

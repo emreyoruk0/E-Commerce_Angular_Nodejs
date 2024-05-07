@@ -21,9 +21,9 @@ export class AuthService {
     private _toastr: ToastrService
   ) { }
 
-  login(model:LoginModel, callback: (res: LoginResponseModel) => void){
+  login(model: LoginModel, callback: (res: LoginResponseModel) => void){
     this._http.post<LoginResponseModel>("auth/login", model, res => callback(res)); //api adresi, model, callback
-  }
+  } // LoginResponseModel tipinde bir sonuç döner
 
   register(model: RegisterModel, callback: (res: LoginResponseModel) => void){
     this._http.post<LoginResponseModel>("auth/register", model, res => callback(res));
@@ -32,7 +32,7 @@ export class AuthService {
 
 
   // kullanıcı giriş yapmış mı kontrolü, eğer giriş yapmışsa true döner, aksi halde login sayfasına yönlendirir
-  // app.routes.ts dosyasında canActivateChild: [() => inject(AuthService).checkIsAuth()] ile kullanıldı
+  // app.routes.ts dosyasında layouts ksımında canActivateChild: [() => inject(AuthService).checkIsAuth()] ile kullanıldı
   checkIsAuth(){
     if(typeof localStorage != 'undefined'){ // localStorage is not defined hatasını engellemek için
       if(localStorage.getItem("user")){
@@ -44,11 +44,9 @@ export class AuthService {
     return false; // kullanıcı giriş yapmadıysa false döner yani diğer sayfalara erişim sağlayamaz
   }
 
-
   logOut(){
-    localStorage.removeItem("user"); // kullanıcı çıkış yaparsa localStorage'daki user bilgisini siler
-    this._toastr.success("Hesaptan çıkış yapıldı");
+    this._toastr.info(`Güle Güle! ${JSON.parse(localStorage.getItem("user")).name}` ,"Çıkış Yapıldı");
+    localStorage.removeItem("user"); // kullanıcı çıkış yaptığında localStorage'daki user bilgisini siler
     this._router.navigateByUrl("login"); // kullanıcı çıkış yaptığında login sayfasına yönlendirir
   }
-
 }

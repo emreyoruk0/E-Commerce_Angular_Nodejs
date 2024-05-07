@@ -6,10 +6,7 @@
       </div>
       <div class="card-body">
         <!-- back-end'de kullanıcı kaydı için isim mail ve şifre alanlarını zorunlu yaptığımız için form ile onları almamız gerek -->
-        <form
-          autocomplete="off"
-          #registerForm="ngForm"
-          (ngSubmit)="register(registerForm)">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" autocomplete="off">
           <div class="form-group">
             <label for="name">Ad Soyad</label>
             <input
@@ -19,12 +16,10 @@
               name="name"
               id="name"
               #name
-              [appValid]="name.validity.valid"
               required
-              minlength="3"/>
-            <div class="invalid-feedback">
-              Ad Soyad alanı en az 3 karakter olmalıdır!
-            </div>
+              minlength="3"
+              [appValid]="name.validity.valid"/>
+            <div class="invalid-feedback">Ad Soyad alanı en az 3 karakter olmalıdır!</div>
           </div>
           <div class="form-group mt-2">
             <label for="email">Mail Adresi</label>
@@ -35,12 +30,10 @@
               name="email"
               id="email"
               #email
-              [appValid]="email.validity.valid"
               required
-              minlength="3"/>
-            <div class="invalid-feedback">
-              Geçerli bir mail adresin giriniz!
-            </div>
+              minlength="3"
+              [appValid]="email.validity.valid"/>
+            <div class="invalid-feedback">Geçerli bir mail adresin giriniz!</div>
           </div>
           <div class="form-group mt-2">
             <label for="password">Şifre</label>
@@ -51,8 +44,8 @@
               name="password"
               id="password"
               #password
-              [appValid]="password.validity.valid"
-              required/>
+              required
+              [appValid]="password.validity.valid"/>
             <div class="invalid-feedback">Şifre alanı boş olamaz</div>
           </div>
           <div class="form-group mt-2">

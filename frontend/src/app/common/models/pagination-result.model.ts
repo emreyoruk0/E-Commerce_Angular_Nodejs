@@ -1,5 +1,6 @@
 // pagination yapısının dönüş yapısını tutan model
-// <T> genel bir tür (generic type) parametresidir.
+// T -> Genel tür (Generic type) parametresidir.
+// Genel türler, farklı veri türleriyle çalışabilen ve yeniden kullanılabilir kod yazmamızı sağlar.
 export class PaginationResultModel<T> {
   datas: T; // dönen veriler
   pageNumber: number = 1;

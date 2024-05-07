@@ -26,12 +26,12 @@ export class RegisterComponent {
   register(form: NgForm){
     if(form.valid){
       this._auth.register(this.model, res => {
+        this._toastr.success(`Hoş Geldiniz ${res.user.name}` ,"Kullanıcı Kaydı Başarılı!");
 
         // token ve kullanıcı bilgilerini localStorage'a kaydeder.
         localStorage.setItem("token", res.token);
         localStorage.setItem("user", JSON.stringify(res.user));
-        
-        this._toastr.success("Kullanıcı kaydı başarılı!");
+
         this._router.navigateByUrl("/"); // Kayıt işlemi başarılıysa anasayfaya yönlendirir.
       });
     }
