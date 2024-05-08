@@ -47,7 +47,7 @@
         ></button>
       </div>
 
-      <form autocomplete="off" #addForm="ngForm" (ngSubmit)="add(addForm)">
+      <form #addForm="ngForm" (ngSubmit)="add(addForm)" autocomplete="off">
         <div class="modal-body">
           <div class="form-group">
             <label for="name">Kategori Adı</label>
@@ -58,9 +58,10 @@
               name="name"
               id="name"
               #name
-              [appValid]="name.validity.valid"
               required
-              minlength="3"/>
+              minlength="3"
+              [appValid]="name.validity.valid"/>
+              <div class="invalid-feedback">Kategori adı en az 3 harften oluşmalıdır!</div>
           </div>
         </div>
         <div class="modal-footer">
@@ -70,7 +71,7 @@
             data-bs-dismiss="modal">
             Kapat
           </button>
-          <button type="submit" class="btn btn-primary">Kaydet</button>
+          <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Kaydet</button>
         </div>
       </form>
     </div>
@@ -94,7 +95,7 @@
         ></button>
       </div>
 
-      <form autocomplete="off" #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
         <div class="modal-body">
           <div class="form-group">
             <label for="updateName">Kategori Adı</label>
@@ -105,9 +106,10 @@
               name="updateName"
               id="updateName"
               #updateName
-              [appValid]="updateName.validity.valid"
               required
-              minlength="3"/>
+              minlength="3"
+              [appValid]="updateName.validity.valid"/>
+              <div class="invalid-feedback">Kategori adı en az 3 harften oluşmalıdır!</div>
           </div>
         </div>
         <div class="modal-footer">
@@ -117,7 +119,7 @@
             data-bs-dismiss="modal">
             Kapat
           </button>
-          <button type="submit" class="btn btn-warning">Güncelle</button>
+          <button [disabled]="updateForm.invalid" type="submit" class="btn btn-warning">Güncelle</button>
         </div>
       </form>
     </div>

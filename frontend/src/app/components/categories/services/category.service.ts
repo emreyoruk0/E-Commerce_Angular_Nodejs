@@ -20,7 +20,7 @@ export class CategoryService {
 
   // tüm kategorileri getirir
   getAll(callback: (res: CategoryModel[]) => void){
-    this._http.get<CategoryModel[]>('categories/', res=>callback(res)); // CategoryModel[] tipinde bir dizi döner
+    this._http.get<CategoryModel[]>('categories/', res => callback(res)); // CategoryModel[] tipinde bir dizi döner
   }
 
 
@@ -33,7 +33,7 @@ export class CategoryService {
     this._http.post<MessageResponseModel>('categories/update', model, res => callback(res)); // api adresi, güncellenecek model, callback fonksiyonu
   }
 
-  removeById(_id:string, callback: (res: MessageResponseModel) => void){
+  removeById(_id: string, callback: (res: MessageResponseModel) => void){
     let model = {_id: _id}; //silinecek kategorinin id'si
     this._http.post<MessageResponseModel>('categories/removeById', model, res => callback(res));
   }

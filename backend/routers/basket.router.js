@@ -9,21 +9,22 @@ const Product = require('../models/product');
 // Sepete ürün ekleme -> /api/baskets/add
 router.post('/add', async (req, res) => {
     response(res, async () => {
-        const {userId, productId, price, quantity} = req.body; //body'den gelen verileri alıp değişkenlere atıyoruz
+        console.log(req.body);
+        const {userId, productId, price, quantity} = req.body; // frontend'den gelen req.body'den verileri alıp değişkenlere atıyoruz
 
         let basket = new Basket();
         basket._id = uuidv4();
-        basket.userId = userId;
+        basket.userId = userId; // frontend'den gelen userId'yi yeni oluşturulan Basket nesnesinin userId'sine atıyoruz
         basket.productId = productId;
         basket.price = price;
         basket.quantity = quantity;
 
-        await basket.save(); //async bir işlem olduğu için await kullanıyoruz
+        await basket.save(); //async bir işlem olduğu için await kullanıyoruz. await sayesinde işlem tamamlananmadan sonraki işlemlere geçilmez. Yani burda save işlemi tamamlanmadan alttaki işlemlere geçilmez.
 
         // Kullanıcı ürünü sepete ekledikten sonra o ürünün mevcut stoğunu azaltmalıyız
         let product = await Product.findById(productId); //productId'ye göre sepetteki ürünü buluyoruz
-        product.stock -= quantity; //ürünün stok miktarını güncelliyoruz
-        await Product.findByIdAndUpdate(productId, product); //ürünün stoğunu güncelledikten sonra kaydediyoruz.
+        product.stock -= quantity; 
+        await Product.findByIdAndUpdate(productId, product); //ürünün stoğunu azalttıktan sonra güncelliyoruz.
 
         res.json({message: 'Ürün sepete başarıyla eklendi.'});
         // burda ne döndürüyorsa front-end kısmında basket.service.ts dosyasındaki add metodunda da o tipte dönmesi gerekiyor.
@@ -38,16 +39,17 @@ router.post('/add', async (req, res) => {
 // Sepetten ürün silme -> /api/baskets/removeById
 router.post('/removeById', async (req, res) => {
     response(res, async () => {
-        const {_id} = req.body; // body'den gelen id'yi alıyor
+        console.log(req.body); // { _id: 'sepetin id'si' }
+        const {_id} = req.body; // frontend'den gelen req.body'den _id'yi alıyor
 
-        let basket = await Basket.findById(_id); //id'ye göre sepetteki mevcut ürünü bulur
+        let basket = await Basket.findById(_id); //id'ye göre sepeti bulur
 
         // Kullanıcı ürünü sepetten sildikten sonra o ürünün mevcut stoğunu arttırmalıyız
-        let product = await Product.findById(basket.productId); //ürünü bulur
-        product.stock += basket.quantity; //ürünün stok miktarını arttırıyoruz.
-        await Product.findByIdAndUpdate(basket.productId, product); 
+        let product = await Product.findById(basket.productId); // sepetteki silinmek istenen ürünü bulur
+        product.stock += basket.quantity;
+        await Product.findByIdAndUpdate(basket.productId, product); //ürünün stoğunu arttırdıktan sonra güncelliyoruz.
 
-        await Basket.findByIdAndDelete(_id); //id'ye göre ürünü siliyoruz
+        await Basket.findByIdAndDelete(_id); //id'ye göre sepeti siler????????????
 
         res.json({message: "Ürünü sepetten başarıyla kaldırıldı!"});
     });

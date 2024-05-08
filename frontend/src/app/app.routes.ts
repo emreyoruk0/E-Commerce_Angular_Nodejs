@@ -49,7 +49,7 @@ export const routes: Routes = [
       {
         path: "categories",
         loadComponent:
-            () => import("./components/categories/categories.component")
+            () => import("./components/categories/components/categories/categories.component")
             .then(c => c.CategoriesComponent)
       },
       {

@@ -9,6 +9,8 @@ const categorySchema = new mongoose.Schema({
     }
 });
 
+// MongoDb'de Category adında ve yukarıdaki yapıda(_id ve name alanı olan) bir collection oluşturuluyor.
+
 const Category = mongoose.model('Category', categorySchema);
 
 module.exports = Category;

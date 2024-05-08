@@ -5,8 +5,10 @@ const basketSchema = new mongoose.Schema({
     productId: String, // Sepetteki ürünün id'si
     price: Number, 
     quantity: Number, 
-    userId: String // hangi kullanıcının eklediğini tutmak için
+    userId: String // hangi kullanıcının sepeti olduğunu tutmak için
 });
+
+// MongoDb'de Basket adında ve yukarıdaki yapıda(_id, productId, price, quantity ve usrId alanları olan) bir collection oluşturuluyor.
 
 const Basket = mongoose.model('Basket', basketSchema);
 
