@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Bu dosya, sepetler(Basket) için bir model oluşturur. Bu model, MongoDB veritabanında sepetler için bir şema tanımlar ve bu şemaya göre baskets adında bir collection oluşturulur.
 const basketSchema = new mongoose.Schema({
     _id: String, // Sepetin id'si
     productId: String, // Sepetteki ürünün id'si

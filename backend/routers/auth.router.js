@@ -31,11 +31,13 @@ router.post("/register", async(req,res)  =>{
         } else {
             await user.save(); // await, kullanıcı kaydedilene kadar bekletir.
             const token = jwt.sign({},secretKey,options);
-            let model = {
+            let userModel = {
                 token: token,
                 user: user
             };
-            res.json(model); // kayıt işlemi başarılı ise kullanıcı bilgileri ve token döndürülür.
+            res.json(userModel); // front-end'e userModel'i gönderir. userModel içinde token ve user bilgileri bulunur.
+            // front-end'deki auth.service.ts içindeki register metodunda post<LoginResponseModel> şeklinde kullanacagız
+            // LoginResponseModel'i front-end'de bu yapıda tanımladık(token ve user alanları olan bir model)
         }
     } catch(error) {
         res.status(500).json({message: error.message});

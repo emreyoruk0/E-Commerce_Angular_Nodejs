@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Bu dosya, kategoriler(Category) için bir model oluşturur. Bu model, MongoDB veritabanında kategoriler için bir şema tanımlar ve bu şemaya göre categories adında bir collection oluşturulur.
 const categorySchema = new mongoose.Schema({
     _id: String,
     name: {

@@ -45,8 +45,16 @@ export class AuthService {
   }
 
   logOut(){
-    this._toastr.info(`Güle Güle! ${JSON.parse(localStorage.getItem("user")).name}` ,"Çıkış Yapıldı");
+    let userString = localStorage.getItem("user");
+    let user = JSON.parse(userString);
+
+    this._toastr.info(`Güle Güle! ${user.name}` ,"Çıkış Yapıldı");
     localStorage.removeItem("user"); // kullanıcı çıkış yaptığında localStorage'daki user bilgisini siler
     this._router.navigateByUrl("login"); // kullanıcı çıkış yaptığında login sayfasına yönlendirir
   }
 }
+
+
+  // localStorage'de bilgiler string olarak tutulur.
+  // localStorage'de tutulan bilgileri kullanabilmek için önce JSON'a çevirmemiz gerek.
+  // bunu da JSON.parse() metodu ile yapıyoruz.

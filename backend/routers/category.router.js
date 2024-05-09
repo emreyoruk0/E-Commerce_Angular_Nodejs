@@ -4,6 +4,8 @@ const Category = require('../models/category');
 const { v4: uuidv4 } = require('uuid');
 const response = require('../services/response.service');
 
+// Veriler front-end'den obje şeklinde geldiği için direk atamak yerine değişkenleri {} içinde yazıp öyle req.body'ye eşitliyoruz.
+
 
 // Tüm kategorileri getirme -->  /api/categories/
 router.get("/", async (req, res) =>{
@@ -11,7 +13,8 @@ router.get("/", async (req, res) =>{
         const categories = await Category.find().sort({name: 1}); //tüm kategorileri bulur ve A'dan Z'ye sıralar
         // await sayesinde işlem tamamlanana kadar bekler ve sonucu categories değişkenine atar. İşlem tamamlanmadan alt satıra geçmez!!
 
-        res.json(categories); // frontend'e tüm kategorileri döndürür. get<CategoryModel[]> şeklinde kullanacagız orda
+        res.json(categories);  // front-end'e categories'i gönderir
+        // frontend'e tüm kategorileri döndürür. get<CategoryModel[]> şeklinde kullanacagız categories.service.ts'deki getAll metodunda
     });
 });
 
@@ -33,7 +36,8 @@ router.post("/add", async (req, res) => {
             });
             await category.save(); //oluşturulan kategoriyi kaydeder
             // await sayesinde işlem tamamlanana kadar yani category kaydedilene kadar bekler. İşlem tamamlanmadan alt satıra geçmez!!
-            res.json({message: "Kategori kaydı başarıyla tamamlandı!"}); //frontend'e ekleme işleminin başarılı olduğuna dair mesaj döndürür. post<MessageResponseModel> şeklinde kullanacagız orda
+
+            res.json({message: "Kategori kaydı başarıyla tamamlandı!"}); //frontend'e ekleme işleminin başarılı olduğuna dair mesaj döndürür. post<MessageResponseModel> şeklinde kullanacagız categories.service.ts'deki add metodunda
         }
     });
 });

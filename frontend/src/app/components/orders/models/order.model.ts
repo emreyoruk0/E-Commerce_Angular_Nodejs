@@ -9,3 +9,5 @@ export class OrderModel{
   createdDate: string = "";
   userId: string = ""; // siparişi veren kullanıcı id'si
 }
+
+// MongoDB'deki orders collection'unda products alanı yok normalde. Fakat siparişleri getirme kısmında /api/orders/ join işlemi yaparak products alanı oluşturup dolduruyoruz. O yüzden frontend'deki OrderModel'de de products alanını tanımlamamız gerekiyor.

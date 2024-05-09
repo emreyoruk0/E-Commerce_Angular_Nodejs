@@ -40,18 +40,18 @@
       </div>
 
       <div class="row mt-2">
-        <div class="col-md-4" *ngFor="let product of products let i = index">
+        <div class="col-md-4 mb-3" *ngFor="let product of products let i = index">
           <div class="card text-center">
             <div class="card-header">
-              <h2>{{product.name}}</h2>
+              <h4>{{product.name}}</h4>
             </div>
             <div class="card-body">
               <img [src]="'http://localhost:5000/' + product.imageUrls[0].path" width="200" height="160">
               <p><b>Kalan Adet: {{product.stock}}</b></p>
               <hr>
-              <h4 class="alert alert-danger">Adet Fiyatı: {{product.price | trCurrency: '₺'}}</h4>
+              <h5 class="alert alert-danger">Adet Fiyatı: {{product.price | trCurrency: '₺'}}</h5>
               <button (click)="addBasket(product._id, product.price)" *ngIf="product.stock > 0" class="btn btn-outline-success w-100">
-                Sepete Ekle
+                Sepete Ekle <i class="fa-solid fa-cart-plus"></i>
               </button>
             </div>
           </div>

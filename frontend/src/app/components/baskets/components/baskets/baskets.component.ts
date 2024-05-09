@@ -39,8 +39,8 @@ export class BasketsComponent implements OnInit{
   // sepetin toplam tutarını hesaplar
   calculate(){
     this.sum = 0;
-    this.baskets.forEach(element =>{
-      (this.sum += element.price * element.quantity);
+    this.baskets.forEach(bas =>{
+      (this.sum += bas.price * bas.quantity);
     });
   }
 
@@ -48,8 +48,8 @@ export class BasketsComponent implements OnInit{
   removeById(_id: string){
     this._swal.callSwal("Ürünü sepetten silmek istiyor musunuz?","Ürünü Sil", "Sil", () =>
       {
-        let model = { _id: _id}
-        this._basketService.removeById(model,res=>{
+        let model = { _id: _id }
+        this._basketService.removeById(model, res => {
         this._toastr.info(res.message);
         this.getAll(); // ürün silindikten sonra sepet güncellenir
       });
@@ -57,12 +57,30 @@ export class BasketsComponent implements OnInit{
   }
 
 
+
+
+
+
+  changeQuantityById(_id: string, quantity: number){
+    let model = {_id: _id, quantity: quantity};
+
+    this._basketService.changeQuantityById(model, res => {
+      this._toastr.info(res.message);
+      this.getAll(); // ürün miktarı değiştirildikten sonra sepet güncellenir
+    });
+  }
+
+
+
+
+
+
   // sipariş oluşturma işlemi
   createOrder(){
-    this._swal.callSwal("Ürünleri almak istiyor musunuz?","Ürünleri Al","Ödeme Yap", ()=>{
+    this._swal.callSwal("Sepetinizdeki ürünleri satın almak istiyor musunuz?","Ürünleri Al","Ödeme Yap", ()=>{
       this._orderService.create(res => {
         this._toastr.success(res.message);
-        this.getAll(); 
+        this.getAll(); // sipariş oluşturulduktan sonra sepet güncellenir
       });
     });
   }

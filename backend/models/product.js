@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// MongoDB'de bu yapıya uygun bir collection oluşturulur.
+// Bu dosya, ürünler(Product) için bir model oluşturur. Bu model, MongoDB veritabanında ürünler için bir şema tanımlar ve bu şemaya göre products adında bir collection oluşturulur.
 const productSchema = new mongoose.Schema({
     _id: String,
     name: String,

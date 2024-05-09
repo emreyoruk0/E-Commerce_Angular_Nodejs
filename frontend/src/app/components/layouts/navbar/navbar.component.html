@@ -1,20 +1,26 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">E-Commerce</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" routerLink="/">
+      <i class="fa-solid fa-basket-shopping"></i> E-Commerce
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nsContent" aria-controls="nsContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="nsContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/">Ana Sayfa</a>
+          <a class="nav-link active" aria-current="page" routerLink="/">
+            <i class="fa-solid fa-house"></i> Ana Sayfa
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/orders">Siparişlerim</a>
+          <a class="nav-link" routerLink="/orders">
+            <i class="fa-solid fa-truck-moving"></i> Siparişlerim
+          </a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Ürünler
+            <i class="fa-solid fa-circle-plus"></i> Daha Fazla
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/products">Ürünler</a></li>
@@ -28,8 +34,10 @@
           {{ _basket.count }}
         </span>
       </button>
-      <div class="mx-2"> {{ currentUser.name }} </div>
-      <button (click)="logOut()" class="btn btn-danger mx-1" type="button">Çıkış Yap</button>
+      <div class="mx-2"><i class="fa-solid fa-user"></i> {{ currentUser.name }} </div>
+      <button (click)="logOut()" class="btn btn-danger mx-1" type="button">
+        Çıkış Yap <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
     </div>
   </div>
 </nav>

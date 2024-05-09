@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   ) {}
 
    ngOnInit(): void {
-    this._basket.getCount();
+    this._basket.getCount(); // mevcut sepetteki ürün sayısını hesaplatır
     this.getCurrentUser();
    }
 
@@ -29,8 +29,7 @@ export class NavbarComponent implements OnInit {
    }
 
    getCurrentUser(){
-      let userJson = localStorage.getItem("user"); // mevcut kullanıcıyı JSON formatında alır
-      this.currentUser = JSON.parse(userJson); // JSON.parse metodu, JSON formatındaki veriyi javascript objesine dönüştürür
+      let userString = localStorage.getItem("user"); // local storage'dan mevcut kullanıcı bilgisini alır (string olarak)
+      this.currentUser = JSON.parse(userString); // JSON.parse metodu -> string olan kullanıcı bilgilerini JSON'a çevirir
    }
-
 }

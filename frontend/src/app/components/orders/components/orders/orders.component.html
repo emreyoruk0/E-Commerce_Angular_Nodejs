@@ -1,30 +1,44 @@
 <app-blank title="Siparişlerim" sectionTitle="Sipariş Listem">
+  <div *ngIf="orders.length == 0" class="text-center">
+    <h4 class="alert alert-danger">Sipariş listeniz boş!</h4>
+    <p>Yepyeni ürünler keşfetmek için aşağıdaki butona tıklayıp ürünlere göz atabilirsin!</p>
+    <button routerLink="/" class="btn btn-warning">Yeni ürünler keşfet</button>
+  </div>
 
-  <app-table
-    [heads]="[
-      '#',
-      'Sipariş Tarihi',
-      'Ürün Resmi',
-      'Ürün Adı',
-      'Adet',
-      'Birim Fiyatı',
-      'Toplam Tutar']">
-      <tr *ngFor="let order of orders let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>
-            {{ order.createdDate | date: 'dd.MM.yyyy HH:mm:ss' }}
-          </td>
-          <td>
-            <img
-              [src]="'http://localhost:5000/' + order?.products[0]?.imageUrls[0].path"
-              width="50"
-            />
-          </td>
-          <td>{{ order?.products[0]?.name }}</td>
-          <td>{{ order.quantity }}</td>
-          <td>{{ order.price }}</td>
-          <td>{{ +(order.price * order.quantity).toFixed(2) | trCurrency: '₺'}}</td> <!-- başındaki + number'a çevirir. .toFixed(2) ile de virgülden sorna sadece 2 hane görünmesi sağlanır-->
-      </tr>
-  </app-table>
+  <div *ngIf="orders.length != 0">
+      <app-table
+        [heads]="[
+        '#',
+        'Sipariş Tarihi',
+        'Ürün Resmi',
+        'Ürün Adı',
+        'Adet',
+        'Birim Fiyatı',
+        'Toplam Tutar',
+        'İşlemler'
+        ]">
+        <tr *ngFor="let order of orders let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              {{ order.createdDate| date: 'dd.MM.yyyy HH:mm:ss' }}
+            </td>
+            <td>
+              <img [src]="'http://localhost:5000/' + order?.products[0]?.imageUrls[0].path" width="50"/>
+            </td>
+            <td>{{ order?.products[0]?.name }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.price }}</td>
+            <td>{{ +(order.price * order.quantity).toFixed(2) | trCurrency: '₺'}}</td> <!-- başındaki + number'a çevirir. .toFixed(2) ile de virgülden sorna sadece 2 hane görünmesi sağlanır-->
+            <td>
+              <button (click)="cancelOrderById(order._id)" class="btn btn-outline-danger btn-sm">
+                İptal Et <i class="fa fa-trash"></i>
+              </button>
+            </td>
+        </tr>
+      </app-table>
+      <div class="float-end">
+        <button class="btn btn-danger">Tüm Siparişleri İptal Et</button>
+      </div>
+  </div>
 
 </app-blank>

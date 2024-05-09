@@ -6,6 +6,8 @@ const fs = require('fs'); // Dosya işlemleri için kullanılır.
 const upload = require('../services/file.service');
 const response = require('../services/response.service'); //response fonksiyonunu import eder
 
+// Veriler front-end'den obje şeklinde geldiği için direk atamak yerine değişkenleri {} içinde yazıp öyle req.body'ye eşitliyoruz.
+
 
 //Ürün Ekleme --> /api/products/add
 // upload.array("images") parametresi -> birden fazla resim yüklemek için kullanılır.
@@ -26,7 +28,7 @@ router.post('/add', upload.array("images"), async (req, res) => {
         }); //eklenecek ürünün özelliklerini belirler
         await product.save(); //yeni ürünü kaydeder
 
-        res.json({message: 'Ürün başarıyla eklendi.'});
+        res.json({message: 'Ürün başarıyla eklendi.'});  // front-end'e {message: ""} gönderir
     });
 });
 
@@ -89,7 +91,7 @@ router.post("/", async (req, res) => {
             isLastPage: totalPageCount == pageNumber ? true : false
         }
 
-        res.json(model); //bulunan ürünleri ve sayfa bilgilerini döndürür
+        res.json(model);  // front-end'e model'i gönderir
     });
 });
 
@@ -113,7 +115,8 @@ router.post("/getById", async (req, res) =>{
     response(res, async () => {
         const {_id} = req.body; //body'den ürünün _id'sini alır
         let product = await Product.findById(_id); //id'si verilen ürünü bulur
-        res.json(product); // ürünü geri döndürür
+
+        res.json(product);  // front-end'e product'u gönderir
     });
 });
 
@@ -206,7 +209,7 @@ router.post("/getAllForHomePage", async (req, res) => {
                .populate('categories');
         }
 
-        res.json(products); 
+        res.json(products);  // front-end'e products'u gönderir
     });
 });
 
