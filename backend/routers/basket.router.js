@@ -5,14 +5,17 @@ const Basket = require('../models/basket');
 const { v4: uuidv4 } = require('uuid');
 const Product = require('../models/product');
 
+// Veriler front-end'den req.body ile gelir.
 // Veriler front-end'den obje şeklinde geldiği için direk atamak yerine değişkenleri {} içinde yazıp öyle req.body'ye eşitliyoruz.
+
+// req.body, istemci/front-end tarafından sunucuya/back-end'e gönderilen verileri içeren bir nesneyi temsil eder. İstemci (örneğin bir tarayıcı), sunucuya bir istek (GET/POST) gönderdiğinde, bu isteğin içeriği req.body içinde depolanır ve sunucu tarafından işlenebilir. Bu sayede sunucu tarafında (back-end'de), kullanıcının front-end'den gönderdiği verilere erişebilir ve bu verileri işleyebiliriz.
 
 
 // Sepete ürün ekleme -> /api/baskets/add
 router.post('/add', async (req, res) => {
     response(res, async () => {
         console.log(req.body); // { userId: 'kullanıcının id'si', productId: 'ürünün id'si', price: 'ürünün fiyatı', quantity: 'ürünün adedi' }
-        const {userId, productId, price, quantity} = req.body; // frontend'den gelen req.body'den userId, productId, price ve quantity kısımlarını alıp burdaki değişkenlere atıyoruz
+        const {userId, productId, price, quantity} = req.body; // req.body'den userId, productId, price ve quantity kısımlarını alıp burdaki değişkenlere atıyoruz
 
         let basket = new Basket();
         basket._id = uuidv4(); // _id, uuidv4() metodu ile benzersiz bir şekilde oluşturulur. Aynı sepetteki aynı ürünler için bile farklı bir _id oluşturulur.
@@ -42,7 +45,7 @@ router.post('/add', async (req, res) => {
 router.post('/removeById', async (req, res) => {
     response(res, async () => {
         console.log(req.body); // { _id: 'uuidv4 ile oluşturulan benzersiz id' }
-        const {_id} = req.body; // frontend'den gelen req.body'den _id'yi alıyor
+        const {_id} = req.body; // req.body'den _id'yi alıyor
 
         let basket = await Basket.findById(_id); // benzersiz _id'ye göre sepetteki seçilen ürünü bulur
 
@@ -62,7 +65,7 @@ router.post('/removeById', async (req, res) => {
 router.post('/', async (req, res) => {
     response(res, async () => {
         //console.log(req.body); // { userId: 'kullanıcının id'si' }
-        const {userId} = req.body; //frontend'den gelen req.body'den userId'yi alıyoruz. Hangi kullanıcının sepet listesini aldığını bilmek için. Yani o kullanıcının sepetindeki ürünleri getirecek
+        const {userId} = req.body; // req.body'den userId'yi alıyoruz. Hangi kullanıcının sepet listesini aldığını bilmek için. Yani o kullanıcının sepetindeki ürünleri getirecek
 
         // aggregate metodu, MongoDB'de join işlemi yapmamızı sağlar
         const baskets = await Basket.aggregate([
@@ -88,10 +91,10 @@ router.post('/', async (req, res) => {
 });
 
 // Sepetteki ürün sayısını getirir -> /api/baskets/getCount
-router.post('/getCount', async(req, res) => {
+router.post('/getCount', async (req, res) => {
     response(res, async () => {
         //console.log(req.body); // { userId: 'kullanıcının id'si' }
-        const {userId} = req.body; // frontend'den gelen req.body'den userId'yi alıyoruz. Hangi kullanıcının sepetinde ürün olduğunu bilmek için
+        const {userId} = req.body; // req.body'den userId'yi alıyoruz. Hangi kullanıcının sepetinde ürün olduğunu bilmek için
 
         const count = await Basket.find({userId: userId}).count(); //userId'ye göre sepeti eşleştirip sayısını döndürüyoruz
 
@@ -107,7 +110,7 @@ router.post('/getCount', async(req, res) => {
 router.post('/changeQuantityById', async (req, res) => {
     response(res, async () => {
         console.log(req.body); // { _id: 'uuidv4 ile oluşturulan benzersiz id', quantity: 'ürün adedi' }
-        const {_id, quantity} = req.body; // frontend'den gelen req.body'den _id ve quantity'yi alıyoruz
+        const {_id, quantity} = req.body; // req.body'den _id ve quantity'yi alıyoruz
 
         let basket = await Basket.findById(_id); // benzersiz _id'ye göre sepetteki seçilen ürünü bulur
         basket.quantity = quantity;

@@ -5,7 +5,12 @@ export class PaginationResultModel<T> {
   datas: T; // dönen veriler
   pageNumber: number = 1;
   pageSize: number = 1;
+  totalPageCount: number = 0;
   isFirstPage: boolean = true;
   isLastPage: boolean = false;
-  totalPageCount: number = 0;
 }
+
+// T yerine diren any de kullanılabilir.
+
+// product.service.ts'de getAll metodunda PaginationResultModel<ProductModel[]> şeklinde kullanıldı.
+// Mesela orda ProductModel[] gönderdiğimiz için burdaki T ona göre adapte olur ve     datas: ProductModel[]   olmuş olur.

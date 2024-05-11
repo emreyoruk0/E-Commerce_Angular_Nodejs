@@ -4,7 +4,10 @@ const Category = require('../models/category');
 const { v4: uuidv4 } = require('uuid');
 const response = require('../services/response.service');
 
+// Veriler front-end'den req.body ile gelir.
 // Veriler front-end'den obje şeklinde geldiği için direk atamak yerine değişkenleri {} içinde yazıp öyle req.body'ye eşitliyoruz.
+
+// req.body, istemci/front-end tarafından sunucuya/back-end'e gönderilen verileri içeren bir nesneyi temsil eder. İstemci (örneğin bir tarayıcı), sunucuya bir istek (GET/POST) gönderdiğinde, bu isteğin içeriği req.body içinde depolanır ve sunucu tarafından işlenebilir. Bu sayede sunucu tarafında (back-end'de), kullanıcının front-end'den gönderdiği verilere erişebilir ve bu verileri işleyebiliriz.
 
 
 // Tüm kategorileri getirme -->  /api/categories/
@@ -23,7 +26,7 @@ router.get("/", async (req, res) =>{
 router.post("/add", async (req, res) => {
     response(res, async () => {
         console.log(req.body); // { name: 'kategori adı' }
-        const {name} = req.body; //frontend'den gelen req.body'den name kısmını alır ve name'e atar
+        const {name} = req.body; // req.body'den name kısmını alır ve name'e atar
 
         const checkName = await Category.findOne({name: name}); //aynı isimde kategori varsa checkName'e atanır, yoksa checkName null olur
 
@@ -47,7 +50,7 @@ router.post("/add", async (req, res) => {
 router.post("/removeById", async (req, res) =>{
     response(res, async () =>{
         console.log(req.body); // { _id: 'kategori id' }
-        const {_id} = req.body; //frontend'den gelen req.body'den silinecek kategorinin _id'sini alır
+        const {_id} = req.body; // req.body'den silinecek kategorinin _id'sini alır
 
         await Category.findByIdAndDelete(_id); //id'si verilen kategoriyi siler
         res.json({message: "Kategori başarıyla silindi!"});
@@ -59,7 +62,7 @@ router.post("/removeById", async (req, res) =>{
 router.post("/update", async (req, res) =>{
     response(res, async () =>{
         console.log(req.body); // { _id: 'kategori id', name: 'kategorinin yeni adı' }
-        const {_id, name} = req.body; // frontend'den gelen req.body'den güncellenecek kategorinin _id'sini ve yeni adını alır
+        const {_id, name} = req.body; // req.body'den güncellenecek kategorinin _id'sini ve yeni adını alır
 
         const category = await Category.findOne({_id: _id}); //id'si verilen kategoriyi bulur
 

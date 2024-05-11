@@ -15,9 +15,9 @@ export class ValidDirective {
 
   // herhangi bir tuşa her basıldığında tetiklenir
   @HostListener('keyup') keyup(){
-    if(this.appValid){ // form geçerliyse yani appValid = true ise
+    if(this.appValid){ // ilgili form elementi geçerliyse yani appValid = true ise
       this._el.nativeElement.className = "form-control is-valid";
-    } else{ // form geçersizse yani appValid = false ise
+    } else{ // geçersizse yani appValid = false ise
       this._el.nativeElement.className = "form-control is-invalid";
     }
   }

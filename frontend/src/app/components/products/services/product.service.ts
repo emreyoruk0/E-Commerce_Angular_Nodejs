@@ -23,10 +23,12 @@ export class ProductService {
     this._http.post<MessageResponseModel>('products/add', model, res => callback(res));
   } // post ile MessageResponseModel tipinde sonucu dönderir sadece
 
+
   //Ürün güncelleme
   update(model: FormData, callback: (res: MessageResponseModel) => void){
     this._http.post<MessageResponseModel>('products/update', model, res => callback(res));
   }
+
 
   getAll(model: RequestModel, callback: (res: PaginationResultModel<ProductModel[]>) => void){
     this._http.post<PaginationResultModel<ProductModel[]>>('products/', model, res => callback(res));
@@ -56,6 +58,7 @@ export class ProductService {
   removeImageByProductIdAndIndex(model: any, callback: (res: MessageResponseModel) => void){
     this._http.post<MessageResponseModel>('products/removeImageByProductIdAndIndex', model, res => callback(res));
   }
+
 
   // Anasayfa için ürünleri getirme
   getAllForHomePage(model: RequestModel, callBack: (res: ProductModel[])=> void){

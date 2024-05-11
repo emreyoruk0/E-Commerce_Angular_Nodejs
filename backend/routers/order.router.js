@@ -5,13 +5,17 @@ const Order = require('../models/order');
 const Basket = require('../models/basket');
 const response = require('../services/response.service');
 
+// Veriler front-end'den req.body ile gelir.
 // Veriler front-end'den obje şeklinde geldiği için direk atamak yerine değişkenleri {} içinde yazıp öyle req.body'ye eşitliyoruz.
 
+// req.body, istemci/front-end tarafından sunucuya/back-end'e gönderilen verileri içeren bir nesneyi temsil eder. İstemci (örneğin bir tarayıcı), sunucuya bir istek (GET/POST) gönderdiğinde, bu isteğin içeriği req.body içinde depolanır ve sunucu tarafından işlenebilir. Bu sayede sunucu tarafında (back-end'de), kullanıcının front-end'den gönderdiği verilere erişebilir ve bu verileri işleyebiliriz.
+
+
 // Sipariş oluşturma(Sepet sayfasındaki Ödeme Yap butonuna bağlı fonksiyon) -> api/orders/create
-router.post('/create', async(req, res) => {
+router.post('/create', async (req, res) => {
     response(res, async () => {
         // console.log(req.body); // { userId: 'user id' }
-        const {userId} = req.body; // front-end'den gelen req.body'den userId'yi alır
+        const {userId} = req.body; // req.body'den userId'yi alır
 
         let baskets = await Basket.find({userId: userId}); // mevcut kullanıcının sepetindeki ürünleri getirir
 
@@ -39,10 +43,10 @@ router.post('/create', async(req, res) => {
 
 
 // Tüm siparişleri getirme -> api/orders/
-router.post('/', async(req, res) => {
+router.post('/', async (req, res) => {
     response(res, async () => {
         // console.log(req.body); // { userId: 'user id' }
-        const {userId} = req.body; // front-end'den gelen req.body'den userId'yi alır
+        const {userId} = req.body; // req.body'den userId'yi alır
 
         // aggregate metodu, MongoDB'de join işlemi yapmamızı sağlar
         let orders = await Order.aggregate([

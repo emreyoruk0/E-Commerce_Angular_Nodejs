@@ -26,11 +26,12 @@
           <td>{{ basket?.products[0]?.name }}</td>
           <td>
             <button (click)="basket.quantity = basket.quantity - 1; changeQuantityById(basket._id, basket.quantity)" class="btn btn-outline-secondary btn-sm">
-              <i class="fa-solid fa-minus"></i>
+              <i *ngIf="basket.quantity != 1" class="fa fa-minus"></i>
+              <i *ngIf="basket.quantity == 1" class="fa fa-trash"></i>
             </button>
             <span class="mx-2">{{ basket.quantity }}</span>
             <button (click)="basket.quantity = basket.quantity + 1; changeQuantityById(basket._id, basket.quantity)" class="btn btn-outline-secondary btn-sm">
-              <i class="fa-solid fa-plus"></i>
+              <i class="fa fa-plus"></i>
             </button>
           </td>
           <td>{{ basket.price }}</td>

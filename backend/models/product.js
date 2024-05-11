@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
     categories: [{   
             type: String, 
             ref: 'Category'
-        }]
+        }] // “categories” alanı, “Category” modeline referans verir. Bu sayede bir ürünün tüm kategorilerini almak için “populate” metodunu kullanabiliriz. Tek Category de olabilir Category dizisi şeklinde de olabilir. Çünkü bir ürün birden fazla kategoriye sahip olabilir.
 });
 
 const Product = mongoose.model('Product', productSchema);

@@ -53,7 +53,7 @@ export const routes: Routes = [
             .then(c => c.CategoriesComponent)
       },
       {
-        path:"baskets",
+        path: "baskets",
         loadComponent:
             () => import("./components/baskets/components/baskets/baskets.component")
             .then(c => c.BasketsComponent)

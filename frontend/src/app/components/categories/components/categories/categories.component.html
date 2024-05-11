@@ -1,7 +1,7 @@
 <app-blank title="Kategoriler" sectionTitle="Kategori Listesi">
   <div class="form-group">
     <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal"> <!-- Ekleme modal'ını açtırır -->
-      <i class="fa fa-plus"></i>
+      <i class="fa fa-plus"></i> Yeni Kategori Ekle
     </button>
     <div class="col-md-4 float-end">
       <input
@@ -38,13 +38,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="addModalLabel">Kategori Ekle</h1>
-        <button
-          type="button"
-          id="addModalCloseBtn"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" id="addModalCloseBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <form #addForm="ngForm" (ngSubmit)="add(addForm)" autocomplete="off">
@@ -65,12 +59,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal">
-            Kapat
-          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
           <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Kaydet</button>
         </div>
       </form>
@@ -86,13 +75,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="updateModalLabel">Kategoriyi Güncelle</h1>
-        <button
-          type="button"
-          id="updateModalCloseBtn"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" id="updateModalCloseBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
@@ -113,12 +96,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal">
-            Kapat
-          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
           <button [disabled]="updateForm.invalid" type="submit" class="btn btn-warning">Güncelle</button>
         </div>
       </form>

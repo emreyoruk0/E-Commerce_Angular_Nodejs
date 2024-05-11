@@ -10,8 +10,14 @@ const options = {
     expiresIn: "1d" //API isteğinin 1 gün geçerli olacağını belirtir.
 };
 
+// Veriler front-end'den req.body ile gelir.
+// Veriler front-end'den obje şeklinde geldiği için direk atamak yerine değişkenleri {} içinde yazıp öyle req.body'ye eşitliyoruz.
+
+// req.body, istemci/front-end tarafından sunucuya/back-end'e gönderilen verileri içeren bir nesneyi temsil eder. İstemci (örneğin bir tarayıcı), sunucuya bir istek (GET/POST) gönderdiğinde, bu isteğin içeriği req.body içinde depolanır ve sunucu tarafından işlenebilir. Bu sayede sunucu tarafında (back-end'de), kullanıcının front-end'den gönderdiği verilere erişebilir ve bu verileri işleyebiliriz.
+
+
 // localhost:5000/api/auth/register   (Kullanıcı kaydı)
-router.post("/register", async(req,res)  =>{
+router.post("/register", async (req,res)  =>{
     // async await yapısı, işlemleri sırayla yapmamızı sağlar. İşlem tamamlanana kadar bekletir.
     // mesela veritabanına kayıt yaparken kayıt işlemi tamamlanana kadar diğer işlemleri yapmaz.
     try {
@@ -45,7 +51,7 @@ router.post("/register", async(req,res)  =>{
 });
 
 // localhost:5000/api/auth/login   (Kullanıcı girişi)
-router.post("/login", async(req,res) =>{
+router.post("/login", async (req,res) =>{
     try{
         console.log(req.body); // { email: 'mehmet@gmail.com', password: '3' } -> front-end'den email ve password alınıyor.
         const {email, password} = req.body; // ve buradaki email ve password değişkenlerine atanıyor.
