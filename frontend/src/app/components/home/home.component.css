@@ -1,3 +1,11 @@
 ul li{
   cursor: pointer;
 }
+
+h4:hover{
+  cursor: pointer;
+}
+
+img:hover{
+  cursor: pointer;
+}

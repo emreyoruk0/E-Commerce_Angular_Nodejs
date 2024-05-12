@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit{
     model.quantity = 1;
     this._basketService.add(model, res => {
       this._toastr.success(res.message);
-      this.getAll();
+      this.getAll(); // sepete ürün eklendikten sonra ürünleri tekrar getirir. Çünkü stok azalıyor ekleyince.
     });
   }
 }

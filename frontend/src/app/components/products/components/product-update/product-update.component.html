@@ -9,7 +9,7 @@
             type="text"
             name="name"
             id="name"
-            [(ngModel)]="product.name"
+            [(ngModel)]="selectedProduct.name"
             required
             #name
             minlength="3"
@@ -27,7 +27,7 @@
             class="form-control"
             name="categoriesSelect"
             id="categoriesSelect"
-            [(ngModel)]="product.categories"
+            [(ngModel)]="selectedProduct.categories"
             multiple
             #categoriesSelect>
             <option *ngFor="let category of categories" [value]="category._id">
@@ -42,7 +42,7 @@
             type="number"
             name="stock"
             id="stock"
-            [(ngModel)]="product.stock"
+            [(ngModel)]="selectedProduct.stock"
             required
             #stock
             min="1"
@@ -59,7 +59,7 @@
             type="number"
             name="price"
             id="price"
-            [(ngModel)]="product.price"
+            [(ngModel)]="selectedProduct.price"
             required
             #price
             min="1"
@@ -85,9 +85,9 @@
         <hr>
         <div class="form-group mt-2">
           <p>Mevcut Resimler</p>
-          <span *ngFor="let image of product.imageUrls let i = index" class="position-relative me-3">
+          <span *ngFor="let image of selectedProduct.imageUrls let i = index" class="position-relative me-3">
             <img [src]="'http://localhost:5000/' + image.path" width="100" class="mx-1">
-            <span id="x" (click)="deleteImage(product._id, i)" class="position-absolute top--10 start-100 translate-middle badge rounded-pill bg-danger">X</span>
+            <span id="x" (click)="deleteImage(selectedProduct._id, i)" class="position-absolute top--10 start-100 translate-middle badge rounded-pill bg-danger">X</span>
           </span>
         </div>
 

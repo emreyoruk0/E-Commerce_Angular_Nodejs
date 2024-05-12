@@ -47,6 +47,12 @@ export const routes: Routes = [
             .then(c => c.ProductUpdateComponent)
       },
       {
+        path: "products/detail/:value",
+        loadComponent:
+            () => import("./components/products/components/product-detail/product-detail.component")
+            .then(c => c.ProductDetailComponent)
+      },
+      {
         path: "categories",
         loadComponent:
             () => import("./components/categories/components/categories/categories.component")

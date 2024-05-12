@@ -42,7 +42,7 @@ export class BasketService {
   }
 
 
-  add(model:BasketModel, callback: (res: MessageResponseModel) => void){
+  add(model: BasketModel, callback: (res: MessageResponseModel) => void){
     let userString = localStorage.getItem("user");
     let user = JSON.parse(userString);
 
@@ -54,14 +54,14 @@ export class BasketService {
   }
 
 
-  removeById(model:any, callback: (res: MessageResponseModel) => void){
+  removeById(model: any, callback: (res: MessageResponseModel) => void){
     this._http.post<MessageResponseModel>("baskets/removeById", model, res=> {
       this.getCount();
       callback(res);
     });
   }
 
-  
+
   changeQuantityById(model: any, callback: (res: MessageResponseModel) => void){
     this._http.post<MessageResponseModel>("baskets/changeQuantityById", model, res => {
       this.getCount();

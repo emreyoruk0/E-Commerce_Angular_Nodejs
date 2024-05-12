@@ -70,8 +70,8 @@ export class ProductAddComponent implements OnInit {
       let product = form.value; // Formun tüm verileri product değişkenine atanır. name, categoriesSelect, price, stock alanlarının tümü alınır
       let name = product["name"];
       let categories: string[] = product["categoriesSelect"];
-      let price = product["price"];
       let stock = product["stock"];
+      let price = product["price"];
       price = price.toString().replace(",", ".");
 
       let formData = new FormData(); // Form verilerini göndermek için FormData nesnesi oluşturulur

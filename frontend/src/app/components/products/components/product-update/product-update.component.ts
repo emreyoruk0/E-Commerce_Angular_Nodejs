@@ -19,8 +19,9 @@ export class ProductUpdateComponent implements OnInit {
   categories: CategoryModel[] = []; //
   images: File[] = [];
   imageUrls: any[] = [];
-  productId: string = ""; // Seçilen(güncellenecek) ürünün id'si bu değişkende tutulacak
-  product: ProductModel = new ProductModel(); // Güncellenecek ürün bu değişkende tutulacak
+
+  selectedProductId: string = ""; // Seçilen(güncellenecek) ürünün id'si bu değişkende tutulacak
+  selectedProduct: ProductModel = new ProductModel(); // Güncellenecek ürün bu değişkende tutulacak
 
   constructor(
     private _categoryService: CategoryService,
@@ -30,7 +31,8 @@ export class ProductUpdateComponent implements OnInit {
     private _activated: ActivatedRoute
   ){
     this._activated.params.subscribe(res => {
-      this.productId = res["value"]; // URL'den gelen value parametresini productId değişkenine atar
+      this.selectedProductId = res["value"]; // URL'den gelen value parametresini productId değişkenine atar
+      //routerLink="/products/update/{{ product._id }}" products.component'da bu şekilde kullanıldı. Yani ürünün _id'si alınarak bu sayfaya yönlendirilir
       this.getById(); // adres çubuğundan gelen id'ye göre ürünü getirir
     });
   }
@@ -40,8 +42,8 @@ export class ProductUpdateComponent implements OnInit {
   }
 
   getById(){
-    let model = {_id: this.productId};
-    this._productService.getById(model, res =>this.product = res);
+    let model = {_id: this.selectedProductId};
+    this._productService.getById(model, res => this.selectedProduct = res);
   }
 
   // Tüm kategorileri getir
@@ -74,22 +76,25 @@ export class ProductUpdateComponent implements OnInit {
     );
   }
 
+
   update(form: NgForm) {
-    if(form.value["categoriesSelect"].length == 0){
-      this._toastr.error("Kategori seçimi yapmadınız!..");
+    if(form.value["name"] == "" || form.value["categoriesSelect"].length == 0 || form.value["price"] == "" || form.value["stock"] == ""){
+      this._toastr.error("Lütfen ürün bilgilerini eksiksiz doldurunuz!..");
       return;
     }
+
     if(form.valid){
       let product = form.value;
       let categories: string[] = product["categoriesSelect"];
       let price = product["price"];
+      let stock = product["stock"];
       price = price.toString().replace(",", ".");
 
       let formData = new FormData();
-      formData.append("_id", this.product._id);
-      formData.append("name", this.product.name);
+      formData.append("_id", this.selectedProduct._id);
+      formData.append("name", this.selectedProduct.name);
       formData.append("price", price);
-      formData.append("stock", product["stock"]);
+      formData.append("stock", stock);
       for(const category of categories){
         formData.append("categories", category);
       }
@@ -106,6 +111,7 @@ export class ProductUpdateComponent implements OnInit {
       });
     }
   }
+
 
   deleteImage(_id: string, index: number){
     let model = {

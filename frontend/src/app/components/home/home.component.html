@@ -10,7 +10,8 @@
         <li
           *ngFor="let category of categories"
           class="list-group-item border border-2"
-          [ngClass]="request.categoryName == category.name ? 'active' : ''" (click)="changeCategory(category._id, category.name)">
+          [ngClass]="request.categoryName == category.name ? 'active' : ''"
+          (click)="changeCategory(category._id, category.name)">
           {{category.name}}
         </li>
       </ul>
@@ -33,7 +34,7 @@
           <div class="col-md-2">
             <label>İşlemler</label><br>
             <button (click)="getAll()" class="btn btn-success">
-              Getir
+              Ürünleri Getir
             </button>
           </div>
         </div>
@@ -43,15 +44,17 @@
         <div class="col-md-4 mb-3" *ngFor="let product of products let i = index">
           <div class="card text-center">
             <div class="card-header">
-              <h4>{{ product.name }}</h4>
+              <h4 routerLink="/products/detail/{{ product._id }}">
+                {{ product.name }}
+              </h4>
             </div>
             <div class="card-body">
-              <img [src]="'http://localhost:5000/' + product.imageUrls[0].path" width="200" height="160">
+              <img [src]="'http://localhost:5000/' + product.imageUrls[0].path" width="200" height="160" routerLink="/products/detail/{{ product._id }}">
               <p><b>Kalan Adet: {{ product.stock }}</b></p>
               <hr>
               <h5 class="alert alert-danger">Adet Fiyatı: {{ product.price | trCurrency: '₺' }}</h5>
               <button (click)="addBasket(product._id, product.price)" *ngIf="product.stock > 0" class="btn btn-outline-success w-100">
-                Sepete Ekle <i class="fa-solid fa-cart-plus"></i>
+                <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
               </button>
             </div>
           </div>
