@@ -31,6 +31,7 @@ export class ProductsComponent implements OnInit {
     this.getAll();
   }
 
+
   // pageNumber = 1 olduğunda ilk sayfadaki ürünleri getirir. Eğer 1 dışında parametre gönderilirse yani sayfa numarası belirtilirse o sayfayı getirir
   getAll(pageNumber = 1) {
     this.request.pageNumber = pageNumber;
@@ -39,6 +40,7 @@ export class ProductsComponent implements OnInit {
       this.setPageNumbers();
     });
   }
+
 
   // Sayfa numaralarını belirler
   setPageNumbers() {
@@ -51,12 +53,14 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+
   // arama input'undaki (keyup)="search()" ile tetiklenir yani her tuşa basıldığında çalışır
   search() {
     if (this.request.search.length >= 3) {
       this.getAll(1);
     } // arama için girilen kelime 3 karakterden büyükse otomatik yani enter'a basmadan arama yapması için
   }
+
 
   // id'si gönderilen ürünü siler
   removeById(id: string) {
@@ -68,6 +72,7 @@ export class ProductsComponent implements OnInit {
       });
     });
   }
+
 
   // id'si gönderilen ürünün aktiflik durumunu değiştirir
   changeProductStatus(id: string) {

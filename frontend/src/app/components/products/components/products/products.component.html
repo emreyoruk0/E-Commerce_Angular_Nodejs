@@ -71,17 +71,17 @@
   </app-table>
   <!-- Liste -->
 
-  <!-- Pagination -->
-  <select name="pageSize" id="pageSize" class="form-control text-center float-start" [(ngModel)]="request.pageSize" style="width: 65px;">
+  <!-- Tek sayfada kaç ürün gösterileceğini ayarlayan Select -->
+  <select (change)="getAll(request.pageNumber)" [(ngModel)]="request.pageSize" name="pageSize" id="pageSize" class="form-control text-center float-start" style="width: 65px;">
     <option>5</option>
     <option>10</option>
     <option>20</option>
     <option>50</option>
     <option>100</option>
-    <option>200</option>
-    <option>500</option>
-    <option>1000</option>
   </select>
+  <!-- Select -->
+
+  <!-- Pagination -->
   <nav class="float-end">
       <ul class="pagination">
         <li class="page-item" [ngClass]="result.isFirstPage ? 'disabled' : ''">

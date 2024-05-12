@@ -1,6 +1,6 @@
 <app-blank title="Ürün Güncelleme" sectionTitle="Ürün Güncelleme">
 
-  <div class="row center">
+  <div class="row justify-content-center">
     <div class="col-md-6">
       <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" autocomplete="off">
         <div class="form-group">
@@ -85,8 +85,9 @@
         <hr>
         <div class="form-group mt-2">
           <p>Mevcut Resimler</p>
-          <span *ngFor="let image of product.imageUrls let i = index" (click)="deleteImage(product._id, i)">
+          <span *ngFor="let image of product.imageUrls let i = index" class="position-relative me-3">
             <img [src]="'http://localhost:5000/' + image.path" width="100" class="mx-1">
+            <span id="x" (click)="deleteImage(product._id, i)" class="position-absolute top--10 start-100 translate-middle badge rounded-pill bg-danger">X</span>
           </span>
         </div>
 

@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './product-add.component.css'
 })
 export class ProductAddComponent implements OnInit {
-  categories: CategoryModel[] = []; //
+  categories: CategoryModel[] = [];
   images: File[] = [];
   imageUrls: any[] = [];
 
@@ -36,7 +36,7 @@ export class ProductAddComponent implements OnInit {
   }
 
   getImages(event: any) {
-    const file: File[] = Array.from(event.target.files); // Dosyalar file değişkenine atanır
+    const file: File[] = Array.from(event.target.files); // Dosyaları file değişkenine atanır
     this.images.push(...file); // Dosyaları images dizisine ekler
 
     for (let i = 0; i < event.target.files.length; i++) {
@@ -53,18 +53,19 @@ export class ProductAddComponent implements OnInit {
     }
   }
 
-
   addImage(imageUrl: string, file: any){
     this.imageUrls.push(
       {imageUrl: imageUrl, name: file.name, size: file.size}
     );
   }
 
+
   add(form: NgForm) {
-    if(form.value["categoriesSelect"].length == 0){
-      this._toastr.error("Kategori seçimi yapmadınız!..");
+    if(form.value["name"] == "" || form.value["categoriesSelect"].length == 0 || form.value["price"] == "" || form.value["stock"] == ""){
+      this._toastr.error("Lütfen ürün bilgilerini eksiksiz doldurunuz!..");
       return;
     }
+
     if(form.valid){
       let product = form.value; // Formun tüm verileri product değişkenine atanır. name, categoriesSelect, price, stock alanlarının tümü alınır
       let name = product["name"];
@@ -95,6 +96,7 @@ export class ProductAddComponent implements OnInit {
       });
     }
   }
+
 
   removeImage(name: string, size: number, index: number){
     this.imageUrls.splice(index, 1); // resmin URL'sini siler

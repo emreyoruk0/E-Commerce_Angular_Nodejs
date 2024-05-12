@@ -1,23 +1,22 @@
 <app-blank title="Ürün Ekleme" sectionTitle="Ürün Ekleme">
 
-  <div class="row center">
-    <div class="col-md-6">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
       <form #addForm="ngForm" (ngSubmit)="add(addForm)" autocomplete="off">
+
         <div class="form-group">
           <label for="name">Ürün Adı</label>
           <input
             type="text"
             name="name"
             id="name"
+            class="form-control"
             ngModel
             required
             #name
             minlength="3"
-            class="form-control"
             [appValid]="name.validity.valid">
-            <div class="invalid-feedback">
-              Ürün adı en az 3 karakter olmalıdır!!
-            </div>
+            <div class="invalid-feedback">Ürün adı en az 3 karakter olmalıdır!!</div>
         </div>
 
         <div class="form-group">
@@ -42,15 +41,13 @@
             type="number"
             name="stock"
             id="stock"
+            class="form-control"
             ngModel
             required
             #stock
             min="1"
-            class="form-control"
             [appValid]="stock.validity.valid">
-            <div class="invalid-feedback">
-              Ürün stok adedi en az 1 olmalıdır!!
-            </div>
+            <div class="invalid-feedback">Ürünün stok adedi en az 1 olmalıdır!!</div>
         </div>
 
         <div class="form-group mt-2">
@@ -59,15 +56,13 @@
             type="number"
             name="price"
             id="price"
+            class="form-control"
             ngModel
             required
             #price
             min="1"
-            class="form-control"
             [appValid]="price.validity.valid">
-            <div class="invalid-feedback">
-              Ürün fiyatı en az 1 olmalıdır!!
-            </div>
+            <div class="invalid-feedback">Ürün fiyatı en az 1 olmalıdır!!</div>
         </div>
 
         <div class="form-group mt-2">
@@ -80,18 +75,20 @@
             multiple
             class="form-control"
             (change)="getImages($event)">
-          <!-- change eventi ile dosya seçildiğinde getImages fonksiyonu çalışacak -->
+    <!-- change eventi ile dosya seçildiğinde getImages fonksiyonu çalışacak. $event ile de elementin tamamını metoda gönderiyoruz -->
         </div>
+
         <hr>
         <div class="form-group mt-2">
           <p>Seçilen Resimler</p>
-          <span *ngFor="let image of imageUrls let i = index" (click)="removeImage(image.name, image.size, i)">
+          <span *ngFor="let image of imageUrls let i = index" class="me-3">
             <img [src]="image.imageUrl" width="100" class="mx-1">
+            <span id="x" (click)="removeImage(image.name, image.size, i)" class="position-absolute top--10 start-100 translate-middle badge rounded-pill bg-danger">X</span>
           </span>
         </div>
 
         <div class="mt-2 form-group">
-          <button class="btn btn-primary w-100">Kaydet</button>
+          <button class="btn btn-success w-100">Kaydet</button>
         </div>
       </form>
     </div>

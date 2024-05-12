@@ -18,7 +18,7 @@ export class ProductService {
     private _http: GenericHttpService
   ) { }
 
-  // Ürün ekleme
+  // Ürün ekleme  **Resim veya dosya ekleyeceksek mutlaka FormData ile almamız gerek**
   add(model: FormData, callback: (res: MessageResponseModel) => void){
     this._http.post<MessageResponseModel>('products/add', model, res => callback(res));
   } // post ile MessageResponseModel tipinde sonucu dönderir sadece
