@@ -20,17 +20,19 @@
           ]">
         <tr *ngFor="let basket of baskets; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>
+          <td routerLink="/products/detail/{{ basket.productId }}" class="cursor">
             <img [src]="'http://localhost:5000/' + basket?.products[0]?.imageUrls[0].path" width="50"/>
           </td>
-          <td>{{ basket?.products[0]?.name }}</td>
+          <td routerLink="/products/detail/{{ basket.productId }}" class="cursor">
+            {{ basket?.products[0]?.name }}
+          </td>
           <td>
-            <button (click)="basket.quantity = basket.quantity - 1; changeQuantityById(basket._id, basket.quantity)" class="btn btn-outline-secondary btn-sm">
-              <i *ngIf="basket.quantity != 1" class="fa fa-minus"></i>
+            <button (click)="decrease(basket, -1)" class="btn btn-outline-secondary btn-sm">
+              <i *ngIf="basket.quantity > 1" class="fa fa-minus"></i>
               <i *ngIf="basket.quantity == 1" class="fa fa-trash"></i>
             </button>
             <span class="mx-2">{{ basket.quantity }}</span>
-            <button (click)="basket.quantity = basket.quantity + 1; changeQuantityById(basket._id, basket.quantity)" class="btn btn-outline-secondary btn-sm">
+            <button (click)="increase(basket, 1)" class="btn btn-outline-secondary btn-sm">
               <i class="fa fa-plus"></i>
             </button>
           </td>
@@ -46,13 +48,16 @@
           </td>
         </tr>
       </app-table>
+      <div class="float-end">
+        <button (click)="clearAllBasket()" class="btn btn-danger">Sepeti Boşalt</button>
+      </div>
     </div>
     <div class="col-md-3 border p-1">
       <h4 class="alert alert-danger">
         Ödenecek: {{ sum | trCurrency : "₺" }}
       </h4>
-      <button (click)="createOrder()" *ngIf="baskets.length > 0" class="btn btn-danger w-100">
-        Ödeme Yap
+      <button (click)="createOrder()" *ngIf="baskets.length > 0" class="btn btn-warning w-100">
+        Siparişi Tamamla
       </button>
     </div>
   </div>

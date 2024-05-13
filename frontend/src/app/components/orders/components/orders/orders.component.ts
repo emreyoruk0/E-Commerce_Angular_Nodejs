@@ -30,16 +30,32 @@ export class OrdersComponent implements OnInit {
   }
 
 
-  cancelOrderById(_id: string){
+  cancelOrderById(id: string){
     this._swal.callSwal("Sipraişi iptal etmek istediğinizden emin misiniz?","Sipariş İptali", "İptal Et", () =>
       {
-        let model = { _id: _id }
+        let model = { _id: id }
         this._orderService.cancelOrderById(model, res => {
         this._toastr.info(res.message);
-        this.getAll(); // sipariş iptal edildikten sonra sepet güncellenir
+        this.getAll(); // sipariş iptal edildikten sonra sipariş listesi güncellenir
       });
     });
   }
+
+
+  cancelAllOrders(){
+    this._swal.callSwal("Tüm siparişleri iptal etmek istediğinizden emin misiniz?", "Tüm Siparişleri İptal Et", "İptal Et", () =>
+      {
+        let userString = localStorage.getItem("user");
+        let user = JSON.parse(userString);
+
+        let model = { userId: user._id }
+        this._orderService.cancelAllOrders(model, res => {
+          this._toastr.info(res.message);
+          this.getAll();
+        })
+    });
+  }
+
 }
 
 

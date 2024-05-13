@@ -40,7 +40,8 @@ router.post("/add", async (req, res) => {
             await category.save(); //oluşturulan kategoriyi kaydeder
             // await sayesinde işlem tamamlanana kadar yani category kaydedilene kadar bekler. İşlem tamamlanmadan alt satıra geçmez!!
 
-            res.json({message: "Kategori kaydı başarıyla tamamlandı!"}); //frontend'e ekleme işleminin başarılı olduğuna dair mesaj döndürür. post<MessageResponseModel> şeklinde kullanacagız categories.service.ts'deki add metodunda
+            res.json({message: "Kategori kaydı başarıyla tamamlandı!"}); //frontend'e {message: ""} gönderir.
+            // post<MessageResponseModel> şeklinde kullanacagız categories.service.ts'deki add metodunda
         }
     });
 });
@@ -53,7 +54,7 @@ router.post("/removeById", async (req, res) =>{
         const {_id} = req.body; // req.body'den silinecek kategorinin _id'sini alır
 
         await Category.findByIdAndDelete(_id); //id'si verilen kategoriyi siler
-        res.json({message: "Kategori başarıyla silindi!"});
+        res.json({message: "Kategori başarıyla silindi!"}); // frontend'e {message: ""} gönderir.
     });
 });
 

@@ -56,7 +56,8 @@ router.post('/removeById', async (req, res) => {
 
         await Basket.findByIdAndDelete(_id); // _id'ye göre sepetten seçilen ürünü siler
 
-        res.json({message: "Ürünü sepetten başarıyla kaldırıldı!"}); //frontend'e silme işleminin başarılı olduğuna dair mesaj döndürür. post<MessageResponseModel> şeklinde kullanacagız orda
+        res.json({message: "Ürünü sepetten başarıyla kaldırıldı!"}); // front-end'e {message: ""} gönderir
+        // post<MessageResponseModel> şeklinde kullanacagız orda
     });
 }); 
 
@@ -90,6 +91,7 @@ router.post('/', async (req, res) => {
     });
 });
 
+
 // Sepetteki ürün sayısını getirir -> /api/baskets/getCount
 router.post('/getCount', async (req, res) => {
     response(res, async () => {
@@ -106,23 +108,55 @@ router.post('/getCount', async (req, res) => {
 
 
 
+
 // Sepetteki ürün adedini güncelleme -> /api/baskets/changeQuantityById
 router.post('/changeQuantityById', async (req, res) => {
     response(res, async () => {
-        console.log(req.body); // { _id: 'uuidv4 ile oluşturulan benzersiz id', quantity: 'ürün adedi' }
-        const {_id, quantity} = req.body; // req.body'den _id ve quantity'yi alıyoruz
+        console.log(req.body); // { _id: 'uuidv4 ile oluşturulan benzersiz id', quantity: 'ürün adedi', a: '1 veya -1'}
+        const {_id, quantity, decOrInc} = req.body; // req.body'den _id ve quantity'yi alıyoruz
 
-        let basket = await Basket.findById(_id); // benzersiz _id'ye göre sepetteki seçilen ürünü bulur
-        basket.quantity = quantity;
+        // decOrInc-> decrease or increase
+        // decOrInc ile (+) butonuna basıldıysa 1, (-) butonuna basıldıysa -1 gelecek.
 
-        if(basket.quantity <= 0){
-            await Basket.findByIdAndDelete(_id); // eğer quantity 0'dan küçükse sepetten ürünü siler
-            res.json({message: "Ürün sepetten başarıyla kaldırıldı!"});
-            return;
+        let selectedBasket = await Basket.findById(_id); // benzersiz _id'ye göre sepeti bulur
+        selectedBasket.quantity = quantity;
+
+        let product = await Product.findById(selectedBasket.productId); // sepetteki ilgili ürünü bulur
+
+        // ürün adedi 1'den 0'a düşürülürse ürün sepetten silinecek ve o ürünün stoğu arttırılacak
+        if(selectedBasket.quantity <= 0){
+            product.stock += 1;
+            await Product.findByIdAndUpdate(selectedBasket.productId, product);
+
+            await Basket.findByIdAndDelete(_id); 
+            res.json({message: "Ürün adedi 0'a düşürüldüğü için sepetten kaldırıldı!"});
+        } else { // ürün adedi 0'dan büyükse o ürünün stoğu artırılacak veya azaltılacak ve sepetteki ürün adedi güncellenecek ve 
+            product.stock -= decOrInc; // decOrInc = 1 veya -1, basılan butone göre
+            await Product.findByIdAndUpdate(selectedBasket.productId, product);
+
+            await Basket.findByIdAndUpdate(_id, selectedBasket); // benzersiz _id'ye göre sepetteki ürünü günceller
+            res.json({message: "Ürün adedi başarıyla güncellendi!"});
+        }    
+    });
+});
+
+
+// Sepetteki tüm ürünleri silme -> /api/baskets/clearAllBasket
+router.post('/clearAllBasket', async (req, res) => {
+    response(res, async () => {
+        const {userId} = req.body; // req.body'den userId'yi alıyoruz
+
+        let baskets = await Basket.find({userId: userId}); // userId'ye göre kullanıcının sepetini bulur
+
+        // Kullanıcı sepetini temizledikten sonra o ürünlerin mevcut stoğunu artırıyoruz.
+        for(let basket of baskets){
+            let product = await Product.findById(basket.productId);
+            product.stock += basket.quantity;
+            await Product.findByIdAndUpdate(basket.productId, product)
         }
 
-        await Basket.findByIdAndUpdate(_id, basket); // benzersiz _id'ye göre sepetteki ürünü günceller
-        res.json({message: "Ürün adedi başarıyla güncellendi!"});
+        await Basket.deleteMany({userId: userId}); // userId'ye göre kullanıcının sepetini boşaltır
+        res.json({message: "Sepet başarıyla temizlendi!"});
     });
 });
 

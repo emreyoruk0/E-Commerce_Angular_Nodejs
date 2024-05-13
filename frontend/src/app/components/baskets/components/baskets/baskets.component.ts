@@ -44,6 +44,7 @@ export class BasketsComponent implements OnInit{
     });
   }
 
+
   // sepetten _id'ye göre ürün silme işlemi
   removeById(_id: string){
     this._swal.callSwal("Ürünü sepetten silmek istiyor musunuz?","Ürünü Sil", "Sil", () =>
@@ -56,14 +57,23 @@ export class BasketsComponent implements OnInit{
     });
   }
 
+  decrease(basket: BasketModel, decOrInc: number){ // a = -1
+    basket.quantity--;
+    this.changeQuantityById(basket._id, basket.quantity, decOrInc);
+  }
+
+  increase(basket:BasketModel, decOrInc: number){ // a = 1
+    basket.quantity++;
+    this.changeQuantityById(basket._id, basket.quantity, decOrInc);
+  }
 
 
-
-
-
-  changeQuantityById(_id: string, quantity: number){
-    let model = {_id: _id, quantity: quantity};
-
+  changeQuantityById(_id: string, quantity: number, decOrInc: number){
+    let model = {
+        _id: _id,
+        quantity: quantity,
+        decOrInc: decOrInc
+      };
     this._basketService.changeQuantityById(model, res => {
       this._toastr.info(res.message);
       this.getAll(); // ürün miktarı değiştirildikten sonra sepet güncellenir
@@ -71,8 +81,18 @@ export class BasketsComponent implements OnInit{
   }
 
 
+  clearAllBasket(){
+    this._swal.callSwal("Sepeti boşaltmak istediğinizden emin misiniz?","Sepeti Boşalt","Temizle", () => {
+      let userString = localStorage.getItem("user");
+      let user = JSON.parse(userString);
 
-
+      let model = { userId: user._id };
+      this._basketService.clearAllBasket(model, res => {
+        this._toastr.info(res.message);
+        this.getAll();
+      });
+    });
+  }
 
 
   // sipariş oluşturma işlemi

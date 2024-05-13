@@ -17,20 +17,56 @@ const orderRouter = require('./routers/order.router');
 
 
 
+app.use("/api/auth", authRouter); 
+//  api/auth/register
+//  api/auth/login
+//  isteklerini yönlendirir.
 
-app.use("/api/auth", authRouter); // api/auth/register ve api/auth/login isteklerini yönlendirir.
 
-app.use("/api/categories", categoryRouter); // api/categories/, api/categories/add, api/categories/removeById ve api/categories/update isteklerini yönlendirir.
 
-app.use("/api/products", productRouter); // api/products/, api/products/add, api/products/removeById, api/products/changeIsActive, api/products/getById,  api/products/update ve api/products/removeImageByProductIdAndIndex isteklerini yönlendirir.
+app.use("/api/categories", categoryRouter); 
+//  api/categories/
+//  api/categories/add
+//  api/categories/removeById
+//  api/categories/update
+//  isteklerini yönlendirir.
 
-app.use("/api/baskets", basketRouter); // api/basket/add, api/basket/removeById ve api/basket/ isteklerini yönlendirir.
 
-app.use("/api/orders", orderRouter); // api/orders/create ve api/orders/ isteklerini yönlendirir.
+
+app.use("/api/products", productRouter); 
+//  api/products/
+//  api/products/add
+//  api/products/removeById
+//  api/products/changeActiveStatus
+//  api/products/getById
+//  api/products/update
+//  api/products/removeImageByProductIdAndIndex
+//  api/products/getAllForHomePage
+//  isteklerini yönlendirir.
+
+
+
+app.use("/api/baskets", basketRouter); 
+//  api/baskets/add
+//  api/baskets/removeById
+//  api/baskets/
+//  api/baskets/getCount
+//  api/baskets/changeQuantityById 
+//  api/baskets/clearAllBasket 
+//  isteklerini yönlendirir.
+
+
+
+app.use("/api/orders", orderRouter); 
+//  api/orders/create
+//  api/orders/
+//  api/orders/cancelOrderById 
+//  api/orders/cancelAllOrders
+//  isteklerini yönlendirir.
+
+
 
 connection();
-
-
 
 const port = process.env.PORT || 5000; 
 app.listen(port, () => {

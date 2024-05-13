@@ -21,11 +21,11 @@ router.post("/register", async (req,res)  =>{
     // async await yapısı, işlemleri sırayla yapmamızı sağlar. İşlem tamamlanana kadar bekletir.
     // mesela veritabanına kayıt yaparken kayıt işlemi tamamlanana kadar diğer işlemleri yapmaz.
     try {
-        const user = new User(req.body); // frontend tarafından gelen verileri kullanarak yeni bir kullanıcı oluşturulur.
         console.log(req.body); // { name: 'Mehmet', email: 'mehmet@gmail.com', password: '3' } -> front-end'den name, email ve password alınıyor.
+        const user = new User(req.body); // frontend tarafından gelen verileri kullanarak yeni bir kullanıcı oluşturulur.
 
         // Diğer kullanıcı bilgileri otomatik olarak burada oluşturulur.
-        user._id = uuidv4();
+        user._id = uuidv4(); // benzersiz _id
         user.createdDate = new Date();
         user.isAdmin = false;
 
@@ -46,9 +46,10 @@ router.post("/register", async (req,res)  =>{
             // LoginResponseModel'i front-end'de bu yapıda tanımladık(token ve user alanları olan bir model)
         }
     } catch(error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({message: error.message}); // hata varsa front-end'e {message: "hataxx"} gönderir.
     }
 });
+
 
 // localhost:5000/api/auth/login   (Kullanıcı girişi)
 router.post("/login", async (req,res) =>{
@@ -57,6 +58,7 @@ router.post("/login", async (req,res) =>{
         const {email, password} = req.body; // ve buradaki email ve password değişkenlerine atanıyor.
         
         let user = await User.findOne({email: email});
+
         if(user == null){
             res.status(403).json({message: "Bu e-mail adresine ait bir kullanıcı bulunamadı!!"});
         } else{
@@ -68,11 +70,11 @@ router.post("/login", async (req,res) =>{
                     token: token,
                     user: user
                 };
-                res.json(model);
+                res.json(model); // front-end'e model'i gönderir.
             }
         }
     } catch(error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({message: error.message}); // hata varsa front-end'e {message: "hataxx"} gönderir.
     }
 });
 

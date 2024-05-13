@@ -10,7 +10,7 @@ import { OrderModel } from '../models/order.model';
 export class OrderService {
 
   // http://localhost:5000/api/...
-  // api/orders/ , api/orders/create ve api/orders/cancelOrderById
+  // api/orders/ , api/orders/create, api/orders/cancelOrderById ve api/orders/cancelAllOrders
   // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
 
   constructor(
@@ -47,6 +47,13 @@ export class OrderService {
     this._http.post<MessageResponseModel>("orders/cancelOrderById", model, res => {
       callback(res);
     });
+  }
+
+  // tüm siparişleri iptal etme
+  cancelAllOrders(model: any, callback: (res: MessageResponseModel) => void){
+    this._http.post<MessageResponseModel>("orders/cancelAllOrders", model, res => {
+      callback(res);
+    })
   }
 
 }

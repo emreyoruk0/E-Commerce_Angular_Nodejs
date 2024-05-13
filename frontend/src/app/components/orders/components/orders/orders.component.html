@@ -22,10 +22,12 @@
             <td>
               {{ order.createdDate| date: 'dd.MM.yyyy HH:mm:ss' }}
             </td>
-            <td>
+            <td routerLink="/products/detail/{{ order.productId }}" class="cursor">
               <img [src]="'http://localhost:5000/' + order?.products[0]?.imageUrls[0].path" width="50"/>
             </td>
-            <td>{{ order?.products[0]?.name }}</td>
+            <td routerLink="/products/detail/{{ order.productId }}" class="cursor">
+              {{ order?.products[0]?.name }}
+            </td>
             <td>{{ order.quantity }}</td>
             <td>{{ order.price }}</td>
             <td>{{ +(order.price * order.quantity).toFixed(2) | trCurrency: '₺'}}</td> <!-- başındaki + number'a çevirir. .toFixed(2) ile de virgülden sorna sadece 2 hane görünmesi sağlanır-->
@@ -37,7 +39,7 @@
         </tr>
       </app-table>
       <div class="float-end">
-        <button class="btn btn-danger">Tüm Siparişleri İptal Et</button>
+        <button (click)="cancelAllOrders()" class="btn btn-danger">Tüm Siparişleri İptal Et</button>
       </div>
   </div>
 

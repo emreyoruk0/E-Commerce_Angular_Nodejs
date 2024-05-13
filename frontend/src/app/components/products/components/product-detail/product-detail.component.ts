@@ -30,14 +30,14 @@ export class ProductDetailComponent {
     private _toastr: ToastrService,
     private _activated: ActivatedRoute
   ){
-    this._activated.params.subscribe(res => {
-      this.productId = res["value"];
+    this._activated.params.subscribe(res => { // routerLink="/products/update/{{ product._id }}" 'deki product._id'yi alır.
+      this.productId = res["value"]; // url'den gelen value ksımını yani product._id'yi alır.
       this.getById();
     });
   }
 
   getById(){
-    let model = {_id: this.productId};
+    let model = { _id: this.productId };
     this._productService.getById(model, res => this.product = res);
   }
 
@@ -59,6 +59,7 @@ export class ProductDetailComponent {
     this._basketService.add(model, res => {
       this._toastr.success(res.message);
       this.getById(); // sepete ürün eklendikten sonra ürünleri tekrar getirir. Çünkü stok azalıyor ekleyince.
+      this.quantity = 1;
     });
   }
 }

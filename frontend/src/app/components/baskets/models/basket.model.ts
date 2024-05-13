@@ -1,7 +1,7 @@
 import { ProductModel } from "../../products/models/product.model";
 
 export class BasketModel{
-  _id: string = "";
+  _id: string = ""; // sepetteki her bir ürünün benzersiz _id'si Yani aynı kullanıcının sepetindeki aynı ürünlerin _id'si bile farklı olacak
   userId: string = ""; // sepetin hangi kullanıcıya ait olduğunu tutmak için
   productId: string = "";
   products: ProductModel[] = []; // sepetin içindeki ürünleri tutmak için

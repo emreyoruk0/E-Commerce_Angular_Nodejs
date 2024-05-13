@@ -9,7 +9,7 @@ import { MessageResponseModel } from '../../../common/models/message.response.mo
 export class BasketService {
 
   // http://localhost:5000/api/...
-  // api/baskets/, api/baskets/add, api/baskets/removeById, api/baskets/getCount ve api/baskets/changeQuantityById
+  // api/baskets/, api/baskets/add, api/baskets/removeById, api/baskets/getCount, api/baskets/changeQuantityById ve api/baskets/clearAllBasket
   // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
 
   count: number = 0;
@@ -67,5 +67,13 @@ export class BasketService {
       this.getCount();
       callback(res);
     });
+  }
+
+
+  clearAllBasket(model: any, callback: (res: MessageResponseModel) => void){
+    this._http.post<MessageResponseModel>("baskets/clearAllBasket", model, res => {
+      this.getCount();
+      callback(res);
+    })
   }
 }

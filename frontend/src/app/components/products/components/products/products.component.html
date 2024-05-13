@@ -35,11 +35,13 @@
       'İşlemler']">
       <tr *ngFor="let product of result.datas let i = index">
           <td>{{ i + 1 }}</td>
-          <td>
+          <td routerLink="/products/detail/{{ product._id }}" class="cursor">
             <img [src]="'http://localhost:5000/' + product.imageUrls[0].path" width="50"/>
             <!-- product.imageUrls[0].path' de 0 denmesinin sebebi ürünün birden fazla fotoğrafı varsa ilki görünsün diye-->
           </td>
-          <td>{{ product.name }}</td>
+          <td routerLink="/products/detail/{{ product._id }}" class="cursor">
+            {{ product.name }}
+          </td>
           <td>
             <ul>
               <li *ngFor="let category of product.categories">
@@ -72,7 +74,7 @@
   <!-- Liste -->
 
   <!-- Tek sayfada kaç ürün gösterileceğini ayarlayan Select -->
-  <select (change)="getAll(request.pageNumber)" [(ngModel)]="request.pageSize" name="pageSize" id="pageSize" class="form-control text-center float-start" style="width: 65px;">
+  <select (change)="getAll(request.pageNumber)" [(ngModel)]="request.pageSize" name="pageSize" id="pageSize" class="form-control text-center float-start cursor" style="width: 65px;">
     <option>5</option>
     <option>10</option>
     <option>20</option>
@@ -82,7 +84,7 @@
   <!-- Select -->
 
   <!-- Pagination -->
-  <nav class="float-end">
+  <nav class="float-end cursor">
       <ul class="pagination">
         <li class="page-item" [ngClass]="result.isFirstPage ? 'disabled' : ''">
           <a class="page-link" (click)="getAll(1)">İlk</a>

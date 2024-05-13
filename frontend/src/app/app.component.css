@@ -1,0 +1,15 @@
+.backtotop {
+  position:fixed;
+  bottom: 20px;
+  right: 20px;
+  color: green;
+  opacity: .4;
+  font-size: 50px;
+  border: none;
+  background: none;
+}
+
+.backtotop:hover {
+  opacity: 1;
+  transition: 0.9s;
+}

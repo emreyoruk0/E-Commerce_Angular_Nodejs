@@ -3,6 +3,7 @@ const router = express.Router();
 const {v4: uuidv4} = require('uuid');
 const Order = require('../models/order');
 const Basket = require('../models/basket');
+const Product = require('../models/product');
 const response = require('../services/response.service');
 
 // Veriler front-end'den req.body ile gelir.
@@ -11,7 +12,7 @@ const response = require('../services/response.service');
 // req.body, istemci/front-end tarafından sunucuya/back-end'e gönderilen verileri içeren bir nesneyi temsil eder. İstemci (örneğin bir tarayıcı), sunucuya bir istek (GET/POST) gönderdiğinde, bu isteğin içeriği req.body içinde depolanır ve sunucu tarafından işlenebilir. Bu sayede sunucu tarafında (back-end'de), kullanıcının front-end'den gönderdiği verilere erişebilir ve bu verileri işleyebiliriz.
 
 
-// Sipariş oluşturma(Sepet sayfasındaki Ödeme Yap butonuna bağlı fonksiyon) -> api/orders/create
+// Sipariş oluşturma(Sepet sayfasındaki Ödeme Yap butonuna bağlı fonksiyon) -> /api/orders/create
 router.post('/create', async (req, res) => {
     response(res, async () => {
         // console.log(req.body); // { userId: 'user id' }
@@ -30,7 +31,6 @@ router.post('/create', async (req, res) => {
             order.createdDate = new Date();
 
             await order.save(); // siparişi kaydeder
-
             await Basket.findByIdAndDelete(basket._id); // sepetten siparişlere eklenen ürünü siler
         }
 
@@ -42,7 +42,7 @@ router.post('/create', async (req, res) => {
 });
 
 
-// Tüm siparişleri getirme -> api/orders/
+// Tüm siparişleri getirme -> /api/orders/
 router.post('/', async (req, res) => {
     response(res, async () => {
         // console.log(req.body); // { userId: 'user id' }
@@ -73,14 +73,40 @@ router.post('/', async (req, res) => {
 });
 
 
-// Sipariş iptali -> api/orders/cancelOrderById
+// Sipariş iptali -> /api/orders/cancelOrderById
 router.post('/cancelOrderById', async (req, res) => {
     response(res, async () => {
+        console.log(req.body); // { _id: 'uuidv4 ile oluşturulan benzersiz id'}
         const {_id} = req.body
 
-        await Order.findByIdAndDelete(_id);
+        let selectedOrder = await Order.findById(_id); // benzersiz _id'ye göre seçilen siparişi bulur
 
+        let product = await Product.findById(selectedOrder.productId); // seçilen siparişin ürününü bulur
+        product.stock += selectedOrder.quantity; // sipariş iptal edildiğinde ürünün stoğunu arttırır
+        await Product.findByIdAndUpdate(selectedOrder.productId, product);
+
+        await Order.findByIdAndDelete(_id); // _id'ye göre seçilen siparişi siler
         res.json({message: "Sipariş başarıyla iptal edildi!"});
+    });
+});
+
+
+// Tüm siparişleri iptal etme -> /api/orders/cancelAllOrders
+router.post('/cancelAllOrders', async (req, res) => {
+    response(res, async () => {
+        const {userId} = req.body; // req.body'den userId'yi alır
+
+        let orders = await Order.find({userId: userId}); // userId'ye göre mevcut kullanıcının tüm siparişlerini getirir
+
+        // Tüm siparişlerin iptal edilmesi durumunda her bir siparişin ürününün stoğunu arttırmalıyız
+        for(let order of orders){
+            let product = await Product.findById(order.productId); // siparişin ürününü bulur
+            product.stock += order.quantity;
+            await Product.findByIdAndUpdate(order.productId, product);
+        }
+
+        await Order.deleteMany({userId: userId}); // userId'ye göre mevcut kullanıcının tüm siparişlerini siler
+        res.json({message: "Tüm siparişler başarıyla iptal edildi!"});
     });
 });
 
