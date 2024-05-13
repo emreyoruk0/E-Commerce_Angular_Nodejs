@@ -4,4 +4,7 @@ In this project I made a E-Commerce site. In Front-end I used Html, Css, Bootstr
 How to Run:
 If you want to download and run this project on your PC, you need to run these commands before run the project;
 
-On the both of backend and frontend folders:  npm install 
+Firstly -> On the both of backend and frontend folders ->         npm install 
+
+Then you need to run this command on backend folder ->            npm start
+After that you need to run this command on frontend folder ->     ng serve -o
