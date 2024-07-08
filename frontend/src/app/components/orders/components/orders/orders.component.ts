@@ -29,7 +29,6 @@ export class OrdersComponent implements OnInit {
     this._orderService.getAll(res => this.orders = res);
   }
 
-
   cancelOrderById(id: string){
     this._swal.callSwal("Sipraişi iptal etmek istediğinizden emin misiniz?","Sipariş İptali", "İptal Et", () =>
       {
@@ -40,7 +39,6 @@ export class OrdersComponent implements OnInit {
       });
     });
   }
-
 
   cancelAllOrders(){
     this._swal.callSwal("Tüm siparişleri iptal etmek istediğinizden emin misiniz?", "Tüm Siparişleri İptal Et", "İptal Et", () =>
@@ -55,7 +53,6 @@ export class OrdersComponent implements OnInit {
         })
     });
   }
-
 }
 
 

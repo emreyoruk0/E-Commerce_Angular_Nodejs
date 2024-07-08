@@ -57,12 +57,12 @@ export class BasketsComponent implements OnInit{
     });
   }
 
-  decrease(basket: BasketModel, decOrInc: number){ // a = -1
+  decrease(basket: BasketModel, decOrInc: number){ // decOrInc = -1
     basket.quantity--;
     this.changeQuantityById(basket._id, basket.quantity, decOrInc);
   }
 
-  increase(basket:BasketModel, decOrInc: number){ // a = 1
+  increase(basket:BasketModel, decOrInc: number){ // decOrInc = 1
     basket.quantity++;
     this.changeQuantityById(basket._id, basket.quantity, decOrInc);
   }

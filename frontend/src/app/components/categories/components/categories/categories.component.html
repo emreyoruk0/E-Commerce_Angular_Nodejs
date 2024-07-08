@@ -16,7 +16,7 @@
   <app-table [heads]='["#", "Kategori Adı", "İşlemler"]'>
       <!-- Girilen değer(search) categoryPipe'a gönderilir, filtrelenir ve ona göre listelenir. -->
       <tr *ngFor="let category of categories | categoryPipe: search let i = index">
-        <td> {{ i+1 }} </td>
+        <td> {{ i + 1 }} </td>
         <td> {{ category.name }} </td>
         <td>
           <button (click)="get(category)" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#updateModal">

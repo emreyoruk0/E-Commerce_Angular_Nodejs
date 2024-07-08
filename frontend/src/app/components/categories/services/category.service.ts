@@ -9,7 +9,6 @@ import { MessageResponseModel } from '../../../common/models/message.response.mo
 })
 export class CategoryService {
 
-
   // http://localhost:5000/api/...
   // api/categories/, api/categories/add, api/categories/update ve api/categories/removeById
   // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
@@ -25,7 +24,7 @@ export class CategoryService {
 
 
   add(name: string, callback: (res: MessageResponseModel) => void){
-    let model = {name: name}; //yeni kategorinin adı
+    let model = { name: name }; // yeni kategorinin adı
     this._http.post<MessageResponseModel>('categories/add', model, res => callback(res)); // MessageResponseModel tipinde bir mesaj dönderir sadece
   }
 
@@ -34,7 +33,7 @@ export class CategoryService {
   }
 
   removeById(_id: string, callback: (res: MessageResponseModel) => void){
-    let model = {_id: _id}; //silinecek kategorinin id'si
+    let model = { _id: _id }; // silinecek kategorinin id'si
     this._http.post<MessageResponseModel>('categories/removeById', model, res => callback(res));
   }
 }

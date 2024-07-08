@@ -38,7 +38,7 @@ export class CategoriesComponent implements OnInit{
 
   // get metodu güncellenecek kategoriyi alır ve buradaki updateCategory değişkenine atar
   get(category: CategoryModel){
-    this.updateCategory = {...category}; //referans olarak değil, değer olarak atama yapar
+    this.updateCategory = { ...category }; // referans olarak değil, değer olarak atama yapar
   }
 
   add(form: NgForm){
@@ -64,14 +64,13 @@ export class CategoriesComponent implements OnInit{
         this.getAll();
         let element = document.getElementById("updateModalCloseBtn");
         element?.click();
-        console.log(this.updateCategory);
       });
     }
   }
 
   // Direk silinecek kategoriyi alır ve silme işlemi yapar
   removeById(model: CategoryModel){
-    this._swal.callSwal(`${model.name} isimli kategoriyi silmek istediğinizden emin misiniz?`, "", "Sil", () =>{
+    this._swal.callSwal(`${model.name} kategorisini silmek istediğinizden emin misiniz?`, "", "Sil", () =>{
       this._categoryService.removeById(model._id, res => { // res: MessageResponseModel tipindeydi
         this._toastr.info(res.message);
         this.getAll();

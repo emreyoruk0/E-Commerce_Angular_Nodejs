@@ -6,8 +6,7 @@
   </div>
 
   <div *ngIf="orders.length != 0">
-      <app-table
-        [heads]="[
+      <app-table [heads]="[
         '#',
         'Sipariş Tarihi',
         'Ürün Resmi',
@@ -42,5 +41,4 @@
         <button (click)="cancelAllOrders()" class="btn btn-danger">Tüm Siparişleri İptal Et</button>
       </div>
   </div>
-
 </app-blank>

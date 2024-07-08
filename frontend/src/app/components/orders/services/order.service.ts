@@ -13,17 +13,17 @@ export class OrderService {
   // api/orders/ , api/orders/create, api/orders/cancelOrderById ve api/orders/cancelAllOrders
   // backend'de API isteklerini bu URL'ler üzerinde yazdık. Bu API'lere göre get veya post işlemi yaparak veri gönderip sonuç alıyoruz veya ilgili işlemi yaptırıyoruz.
 
+  userString = localStorage.getItem("user");
+  user = JSON.parse(this.userString);
+
   constructor(
     private _http: GenericHttpService,
     private _basketService: BasketService
   ) { }
 
-
   // sipariş oluşturma
   create(callback: (res: MessageResponseModel) => void){
-    let userString = localStorage.getItem("user");
-    let user = JSON.parse(userString);
-    let model = {userId: user._id};
+    let model = { userId: this.user._id };
 
     this._http.post<MessageResponseModel>("orders/create", model, res => { // MessageResponseModel dönecek
       this._basketService.getCount(); // sipariş eklendikten sonra sepetteki ürün sayısı güncellenir
@@ -33,9 +33,7 @@ export class OrderService {
 
   // tüm siparişleri getirme
   getAll(callback: (res: OrderModel[]) => void){
-    let userString = localStorage.getItem("user");
-    let user = JSON.parse(userString);
-    let model = {userId: user._id};
+    let model = { userId: this.user._id };
 
     this._http.post<OrderModel[]>("orders/", model, res =>{ // OrderModel[] dönecek
       callback(res);
@@ -53,7 +51,6 @@ export class OrderService {
   cancelAllOrders(model: any, callback: (res: MessageResponseModel) => void){
     this._http.post<MessageResponseModel>("orders/cancelAllOrders", model, res => {
       callback(res);
-    })
+    });
   }
-
 }

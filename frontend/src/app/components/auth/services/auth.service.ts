@@ -50,6 +50,7 @@ export class AuthService {
 
     this._toastr.info(`Güle Güle! ${user.name}` ,"Çıkış Yapıldı");
     localStorage.removeItem("user"); // kullanıcı çıkış yaptığında localStorage'daki user bilgisini siler
+    localStorage.removeItem("token"); // kullanıcı çıkış yaptığında localStorage'daki token bilgisini siler
     this._router.navigateByUrl("login"); // kullanıcı çıkış yaptığında login sayfasına yönlendirir
   }
 }
