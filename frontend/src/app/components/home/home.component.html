@@ -21,21 +21,22 @@
         <div class="row">
           <div class="col-md-7">
             <label>Arama</label>
-            <input [(ngModel)]="request.search" type="search" class="form-control" placeholder="Ürün arayın...">
+            <input
+              (keyup)="getAll()"
+              [(ngModel)]="request.search"
+              type="search" class="form-control"
+              placeholder="Ürün arayın...">
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 ms-auto">
             <label>Fiyat Sıralaması</label>
-            <select [(ngModel)]="request.priceFilter" class="form-control">
+            <select
+              (change)="getAll()"
+              [(ngModel)]="request.priceFilter"
+              class="form-control">
               <option value="0">Seçim yapınız...</option>
               <option value="1">Artan Fiyat</option>
               <option value="-1">Azalan Fiyat</option>
             </select>
-          </div>
-          <div class="col-md-2">
-            <label>İşlemler</label><br>
-            <button (click)="getAll()" class="btn btn-success">
-              Ürünleri Getir
-            </button>
           </div>
         </div>
       </div>
@@ -49,13 +50,19 @@
               </h4>
             </div>
             <div class="card-body">
-              <img [src]="'http://localhost:5000/' + product.imageUrls[0].path" width="200" height="160" routerLink="/products/detail/{{ product._id }}">
+              <img [src]="'http://localhost:5000/' + product.imageUrls[0].path" routerLink="/products/detail/{{ product._id }}" width="200" height="160">
               <p><b>Kalan Adet: {{ product.stock }}</b></p>
               <hr>
               <h5 class="alert alert-danger">Adet Fiyatı: {{ product.price | trCurrency: '₺' }}</h5>
-              <button (click)="addBasket(product._id, product.price)" *ngIf="product.stock > 0" class="btn btn-outline-success w-100">
+              <button
+                (click)="addBasket(product._id, product.price)"
+                *ngIf="product.stock > 0 else stoktaYok"
+                class="btn btn-outline-success w-100">
                 <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
               </button>
+              <ng-template #stoktaYok>
+                  <span class="btn btn-danger disabled w-100">Bu ürün tükendi !</span>
+              </ng-template>
             </div>
           </div>
         </div>

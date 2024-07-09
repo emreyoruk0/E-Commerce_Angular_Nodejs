@@ -16,7 +16,7 @@ import { ProductModel } from '../../models/product.model';
   styleUrl: './product-update.component.css'
 })
 export class ProductUpdateComponent implements OnInit {
-  categories: CategoryModel[] = []; //
+  categories: CategoryModel[] = [];
   images: File[] = [];
   imageUrls: any[] = [];
 
@@ -42,7 +42,7 @@ export class ProductUpdateComponent implements OnInit {
   }
 
   getById(){
-    let model = {_id: this.selectedProductId};
+    let model = { _id: this.selectedProductId };
     this._productService.getById(model, res => this.selectedProduct = res);
   }
 

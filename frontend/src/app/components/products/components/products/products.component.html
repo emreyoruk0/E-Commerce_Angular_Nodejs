@@ -74,7 +74,12 @@
   <!-- Liste -->
 
   <!-- Tek sayfada kaç ürün gösterileceğini ayarlayan Select -->
-  <select (change)="getAll(request.pageNumber)" [(ngModel)]="request.pageSize" name="pageSize" id="pageSize" class="form-control text-center float-start cursor" style="width: 65px;">
+  <select
+    (change)="getAll(request.pageNumber)"
+    [(ngModel)]="request.pageSize"
+    name="pageSize" id="pageSize"
+    class="form-control text-center float-start cursor"
+    style="width: 65px;">
     <option>5</option>
     <option>10</option>
     <option>20</option>

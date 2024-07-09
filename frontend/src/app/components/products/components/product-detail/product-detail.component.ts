@@ -16,12 +16,12 @@ import { CategoryModel } from '../../../categories/models/category.model';
   styleUrl: './product-detail.component.css'
 })
 export class ProductDetailComponent {
-  productId: string = "";
-  product: ProductModel = new ProductModel();
+  productId: string = ""; // Seçilen ürünün id'si
+  product: ProductModel = new ProductModel(); // Seçilen ürün
 
-  categories: CategoryModel[] = []
+  categories: CategoryModel[] = [];
 
-  imageIndex: number = 0;
+  imageIndex: number = 0; // ürünün resimlerinden hangisinin gösterileceğini tutar
   quantity: number = 1;
 
   constructor(
@@ -36,6 +36,7 @@ export class ProductDetailComponent {
     });
   }
 
+  // id'si alınan ürünü getirir
   getById(){
     let model = { _id: this.productId };
     this._productService.getById(model, res => this.product = res);
@@ -48,6 +49,8 @@ export class ProductDetailComponent {
   decrease(){
     if(this.quantity > 1){
       this.quantity--;
+    } else {
+      this._toastr.error("Ürün adedi 1'den az olamaz !.");
     }
   }
 
